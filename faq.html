@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lilfromdahill | FAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070d;
+      --text: #f5f7ff;
+      --muted: #a8b2c7;
+      --accent: #7c5cff;
+      --accent-2: #00d4ff;
+      --accent-3: #ff4ecd;
+      --line: rgba(255,255,255,0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124,92,255,0.12), transparent 22%),
+        radial-gradient(circle at 80% 15%, rgba(0,212,255,0.1), transparent 18%),
+        linear-gradient(180deg, #04050a 0%, #08101f 45%, #05070d 100%);
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(1.5px 1.5px at 25% 72%, rgba(255,255,255,0.75), transparent 60%),
+        radial-gradient(2px 2px at 40% 25%, rgba(255,255,255,0.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 58% 82%, rgba(255,255,255,0.75), transparent 60%),
+        radial-gradient(2px 2px at 72% 30%, rgba(255,255,255,0.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 88% 68%, rgba(255,255,255,0.8), transparent 60%),
+        radial-gradient(1px 1px at 52% 10%, rgba(255,255,255,0.7), transparent 60%),
+        radial-gradient(1px 1px at 33% 53%, rgba(255,255,255,0.65), transparent 60%),
+        radial-gradient(1px 1px at 65% 52%, rgba(255,255,255,0.7), transparent 60%);
+      opacity: 0.75;
+      z-index: 0;
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      background: rgba(5,7,13,0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+    .navbar-brand { font-family: 'Orbitron', sans-serif; font-weight: 800; color: var(--text); letter-spacing: 1px; }
+    .nav-link { color: rgba(255,255,255,0.82) !important; transition: color 0.2s ease, transform 0.2s ease; }
+    .nav-link:hover, .nav-link.active { color: white !important; transform: translateY(-1px); }
+    .btn-brand {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: none; color: white; padding: 0.9rem 1.4rem; border-radius: 999px; font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 30px rgba(124,92,255,0.25);
+    }
+    .btn-brand:hover { color: white; transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,212,255,0.2); }
+    .btn-outline-light-custom {
+      border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.03);
+      color: white; padding: 0.9rem 1.4rem; border-radius: 999px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-outline-light-custom:hover { color: white; transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 62vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 0 3.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 0.85rem; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px; background: rgba(255,255,255,0.04);
+      color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem;
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.98; margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, #fff, var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { color: var(--muted); max-width: 580px; font-size: 1.05rem; animation: fadeUp 0.95s ease forwards; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.6rem; animation: fadeUp 1.05s ease forwards; }
+
+    /* ── Search bar ── */
+    .search-wrap {
+      position: relative;
+      max-width: 520px;
+    }
+    .search-wrap i {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.05rem;
+      pointer-events: none;
+    }
+    .faq-search {
+      width: 100%;
+      padding: 0.95rem 1.2rem 0.95rem 2.9rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.97rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .faq-search::placeholder { color: var(--muted); }
+    .faq-search:focus { border-color: rgba(124,92,255,0.5); background: rgba(255,255,255,0.07); }
+
+    /* ── Section ── */
+    .section-wrap { position: relative; z-index: 1; padding: 1rem 0 5rem; }
+    .section-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 1.4rem; }
+
+    /* ── Category label ── */
+    .cat-label {
+      display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.2rem;
+    }
+    .cat-label h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 0.88rem; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); margin: 0; white-space: nowrap;
+    }
+    .cat-label::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .cat-icon {
+      width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+      font-size: 0.9rem; background: linear-gradient(135deg, rgba(124,92,255,0.2), rgba(0,212,255,0.12));
+      border: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+    }
+
+    /* ── Accordion ── */
+    .faq-item {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item.open { border-color: rgba(124,92,255,0.35); }
+    .faq-item.no-match { display: none; }
+
+    .faq-trigger {
+      width: 100%; background: none; border: none; color: var(--text);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 1.25rem 1.4rem; cursor: pointer; text-align: left;
+      font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+      transition: background 0.2s;
+    }
+    .faq-trigger:hover { background: rgba(255,255,255,0.03); }
+
+    .faq-icon {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05);
+      display: grid; place-items: center; font-size: 0.85rem; color: var(--accent-2);
+      transition: transform 0.3s ease, background 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(124,92,255,0.15); }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+      padding: 0 1.4rem;
+    }
+    .faq-item.open .faq-body { max-height: 400px; padding: 0 1.4rem 1.4rem; }
+
+    .faq-body p {
+      color: var(--muted);
+      line-height: 1.78;
+      margin: 0;
+      font-size: 0.97rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1rem;
+    }
+
+    /* ── No results ── */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+    .no-results i { font-size: 2.5rem; opacity: 0.3; display: block; margin-bottom: 0.8rem; }
+    .no-results.visible { display: block; }
+
+    /* ── Still have questions box ── */
+    .cta-box {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .cta-box h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 0.75rem; }
+    .cta-box p { color: var(--muted); margin-bottom: 1.5rem; }
+
+    /* ── Sidebar quick-nav ── */
+    .sidebar-nav {
+      position: sticky;
+      top: 90px;
+    }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 0.9rem; border-radius: 12px;
+      color: var(--muted); font-size: 0.9rem; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 0.25rem;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active-nav {
+      background: rgba(255,255,255,0.06); color: var(--text);
+    }
+    .sidebar-nav a i { font-size: 0.85rem; color: var(--accent-2); }
+    .sidebar-heading {
+      font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 0.6rem; padding: 0 0.9rem;
+    }
+
+    /* ── Reveal ── */
+    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    [data-reveal].active { opacity: 1; transform: translateY(0); }
+
+    footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 2rem 0; color: var(--muted); position: relative; z-index: 1; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    @media (prefers-reduced-motion: reduce) { *{animation:none!important;transition:none!important} [data-reveal]{opacity:1;transform:none} }
+    @media (max-width: 991px) {
+      .hero{text-align:center} .hero p{margin-left:auto;margin-right:auto}
+      .hero-actions{justify-content:center} .search-wrap{margin:0 auto}
+      .sidebar-nav{display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Lilfromdahill</a>
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="faq.html">FAQ</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item ms-lg-2 mt-3 mt-lg-0"><a class="btn btn-brand" href="contact.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow"><i class="bi bi-patch-question"></i> Common questions, clear answers</div>
+      <h1>Got <span>questions?</span><br>Good — ask them.</h1>
+      <p>Everything clients usually want to know before booking is answered here. If something is still unclear, the contact page is one click away.</p>
+      <div class="hero-actions">
+        <a href="#faq-main" class="btn btn-brand">Browse Questions</a>
+        <a href="contact.html" class="btn btn-outline-light-custom">Ask Something Else</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main FAQ section -->
+  <section class="section-wrap" id="faq-main">
+    <div class="container">
+      <!-- Search -->
+      <div class="mb-5" data-reveal>
+        <div class="search-wrap">
+          <i class="bi bi-search"></i>
+          <input class="faq-search" id="faqSearch" type="text" placeholder="Search questions…" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="row g-5">
+
+        <!-- Sidebar -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <div class="sidebar-nav" data-reveal>
+            <div class="sidebar-heading">Jump to</div>
+            <a href="#cat-booking"><i class="bi bi-calendar-check"></i> Booking</a>
+            <a href="#cat-pricing"><i class="bi bi-tag"></i> Pricing</a>
+            <a href="#cat-process"><i class="bi bi-arrow-repeat"></i> Process</a>
+            <a href="#cat-delivery"><i class="bi bi-send"></i> Delivery</a>
+            <a href="#cat-revisions"><i class="bi bi-pencil-square"></i> Revisions</a>
+            <a href="#cat-rights"><i class="bi bi-shield-check"></i> Rights & Usage</a>
+          </div>
+        </div>
+
+        <!-- FAQ Content -->
+        <div class="col-lg-9">
+
+          <!-- No results -->
+          <div class="no-results" id="noResults">
+            <i class="bi bi-search"></i>
+            No questions match that search. Try different words or <a href="contact.html" style="color:var(--accent-2)">ask directly</a>.
+          </div>
+
+          <!-- ── BOOKING ── -->
+          <div class="faq-category mb-5" id="cat-booking" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-calendar-check" style="color:var(--accent-2)"></i></span>
+              <h3>Booking</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How do I book a project?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Head to the Contact page, fill in the form with your project details, and send it through. Once the brief is received, a quote will be put together based on what you need. From there, a start date gets locked in and the work begins.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How far in advance should I book?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>For standard projects, a week or two in advance is usually enough. For larger jobs like full music videos or complete brand packages, reaching out at least 3–4 weeks ahead gives enough time to plan properly and deliver at the right quality.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Do you take rush jobs?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Sometimes — it depends on what's already in the schedule. Rush jobs are possible but usually carry an additional fee because they require reprioritising other work. Reach out directly with your deadline and it'll be clear from there whether it's doable.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Do I need to pay upfront?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>A deposit is required before any work starts. The exact amount and payment structure gets confirmed when the quote is sent. This protects both sides and ensures the project is taken seriously from the start.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PRICING ── -->
+          <div class="faq-category mb-5" id="cat-pricing" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-tag" style="color:var(--accent-3)"></i></span>
+              <h3>Pricing</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Are the prices on the pricing page final?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>No — the pricing page shows starting points and package structures. The final price is always based on the actual scope of work: how complex the project is, how many deliverables are needed, the turnaround time, and how many revisions are included.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Why do prices vary so much between projects?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Because no two projects are the same. A simple logo has a very different workload from a full music video with multiple scenes, colour grading, effects, and multiple output formats. Pricing reflects the actual time and skill that goes into the work.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Can I mix services from different packages?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Yes. A project can combine a visualiser, cover art, a logo, and a promo graphic all in one quote. Just list everything that's needed when reaching out and a combined price will be worked out.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Is there a discount for long-term or repeat clients?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Working with the same artist across multiple projects builds a better understanding of their sound and brand, which makes the work sharper over time. Reach out and it can be discussed — returning clients are always valued.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── PROCESS ── -->
+          <div class="faq-category mb-5" id="cat-process" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-arrow-repeat" style="color:var(--accent-2)"></i></span>
+              <h3>Process</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How does the creative process work?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>It starts with understanding the project — the sound, the vision, the audience, and what needs to be delivered. From there, a direction is put together and work begins. Drafts or previews are shared at key stages so nothing goes too far in the wrong direction before it gets corrected.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Do I need to provide anything to get started?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Yes — the more context the better. For music videos and visualisers, the audio file is needed. For branding work, any existing logos, colours, or references help. For all projects, a clear idea of the mood, style, and purpose makes the output much stronger.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Will I be kept updated during the project?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Yes. Projects don't go silent mid-way. Progress updates and previews are shared at key points so you can give feedback before the final version is locked in. Clear communication is part of how the work gets done properly.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── DELIVERY ── -->
+          <div class="faq-category mb-5" id="cat-delivery" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-send" style="color:var(--accent-3)"></i></span>
+              <h3>Delivery</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How long does a project take to complete?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>It depends on the project size. A simple logo or graphic can be done in a few days. A visualiser usually takes 3–7 days. A full music video or brand package can take 1–3 weeks depending on complexity and revision rounds. Timelines are confirmed when the quote is sent.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                What format will my files be delivered in?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>That depends on what the project needs. Videos are typically delivered as high-resolution MP4 files. Design work comes as PNG, JPEG, or PDF. Source files like PSD or AI can be included depending on what was agreed. Just specify what formats are needed when booking.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How are finished files sent over?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Files are sent via Google Drive, WeTransfer, or whatever platform works best. Large video files especially need a proper transfer method — not just email. The delivery method gets sorted out during the project.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── REVISIONS ── -->
+          <div class="faq-category mb-5" id="cat-revisions" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-pencil-square" style="color:var(--accent-2)"></i></span>
+              <h3>Revisions</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                How many revisions are included?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>The number of revision rounds is confirmed in the quote before work begins. Starter projects typically include light revision rounds, while Pro and Premium packages include more. Major changes that go beyond the original brief may affect the final price.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                What counts as a revision vs. a new request?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>A revision is a refinement of what was agreed — adjusting a colour, tweaking text, trimming a clip. A new request is changing the concept, adding scenes, or switching the direction entirely. New requests are treated as additional work and quoted separately.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                What if I'm not happy with the first draft?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Feedback is always welcome — that's what the revision rounds are for. The clearer the feedback is, the faster the fix. If the direction needs a bigger change, that conversation happens openly and a solution gets worked out. The goal is always work that the artist is genuinely happy with.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── RIGHTS & USAGE ── -->
+          <div class="faq-category mb-5" id="cat-rights" data-reveal>
+            <div class="cat-label">
+              <span class="cat-icon"><i class="bi bi-shield-check" style="color:var(--accent-3)"></i></span>
+              <h3>Rights &amp; Usage</h3>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Do I own the work after it's delivered?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Yes — once the final payment is made, the delivered work is yours to use. You can upload it, distribute it, and use it commercially as part of your music and brand. Specific usage terms are confirmed in the project agreement.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Will the work be shared on your portfolio or social media?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Completed work may be featured as part of the portfolio and shared on social platforms. If a project needs to stay private until a specific release date, just say so upfront and that will be respected.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                Can you sign an NDA for confidential projects?
+                <span class="faq-icon"><i class="bi bi-plus-lg"></i></span>
+              </button>
+              <div class="faq-body">
+                <p>Yes. For projects that need to stay private before release — unreleased music, upcoming album campaigns, or confidential brand work — an NDA can be arranged. Reach out when booking and this gets sorted before any work begins.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /col -->
+      </div><!-- /row -->
+
+      <!-- Still have questions -->
+      <div class="cta-box mt-4" data-reveal>
+        <h3>Still Have a Question?</h3>
+        <p>If something wasn't covered here, the fastest way to get an answer is to reach out directly. No question is too small before booking.</p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+          <a href="contact.html" class="btn btn-brand">Ask on the Contact Page</a>
+          <a href="pricing.html" class="btn btn-outline-light-custom">View Pricing</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <span>© 2026 Lilfromdahill. All rights reserved.</span>
+      <span>Built for the music world.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    /* ── Accordion ── */
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        // toggle clicked
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    /* ── Search ── */
+    const searchInput = document.getElementById('faqSearch');
+    const noResults   = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-trigger').textContent.toLowerCase();
+        const answer   = item.querySelector('.faq-body p').textContent.toLowerCase();
+        const match    = !q || question.includes(q) || answer.includes(q);
+        item.classList.toggle('no-match', !match);
+        if (match) visibleCount++;
+      });
+
+      // hide empty category sections
+      document.querySelectorAll('.faq-category').forEach(cat => {
+        const visible = cat.querySelectorAll('.faq-item:not(.no-match)').length;
+        cat.style.display = visible === 0 && q ? 'none' : '';
+      });
+
+      noResults.classList.toggle('visible', visibleCount === 0 && q.length > 0);
+    });
+
+    /* ── Scroll reveal ── */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+    /* ── Navbar scroll ── */
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      navbar.style.background = window.scrollY > 30 ? 'rgba(5,7,13,0.92)' : 'rgba(5,7,13,0.82)';
+      navbar.style.boxShadow  = window.scrollY > 30 ? '0 8px 20px rgba(0,0,0,0.18)' : 'none';
+    }, { passive: true });
+
+    /* ── Active sidebar link on scroll ── */
+    const cats    = document.querySelectorAll('.faq-category');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active-nav'));
+          const link = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+          if (link) link.classList.add('active-nav');
+        }
+      });
+    }, { threshold: 0.4 });
+    cats.forEach(c => io.observe(c));
+  </script>
+</body>
+</html>
