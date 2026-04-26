@@ -3,449 +3,636 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lilfromdahill</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <title>SUB-way Laundry – We Deliver Clean to Your Door</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #05070d;
-      --bg-2: #0b1020;
-      --card: rgba(255,255,255,0.05);
-      --line: rgba(255,255,255,0.1);
-      --text: #f5f7ff;
-      --muted: #a8b2c7;
-      --accent: #7c5cff;
-      --accent-2: #00d4ff;
-      --accent-3: #ff4ecd;
+      --teal:      #18B8AE;
+      --teal-dark: #0E9990;
+      --teal-pale: #E0F7F6;
+      --navy:      #1C2B4A;
+      --navy-mid:  #2C3E60;
+      --white:     #FFFFFF;
+      --grey-bg:   #F2F7F9;
+      --grey-card: #EAF2F4;
+      --text:      #1C2B4A;
+      --text-muted:#5A6E8C;
+      --radius:    16px;
+      --shadow:    0 8px 32px rgba(28,43,74,0.10);
+      --shadow-lg: 0 20px 60px rgba(28,43,74,0.14);
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
 
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
       color: var(--text);
       overflow-x: hidden;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(124, 92, 255, 0.12), transparent 22%),
-        radial-gradient(circle at 80% 15%, rgba(0, 212, 255, 0.1), transparent 18%),
-        linear-gradient(180deg, #04050a 0%, #08101f 45%, #05070d 100%);
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(24,184,174,0.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      height: 72px;
+      box-shadow: 0 2px 16px rgba(28,43,74,0.07);
+      transition: box-shadow .3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 48px; width: auto;
+    }
+    .nav-logo-text {
+      line-height: 1.1;
+    }
+    .nav-logo-text .brand-sub { color: var(--teal); font-size: 1.18rem; font-weight: 900; letter-spacing: -0.5px; }
+    .nav-logo-text .brand-way { color: var(--teal); font-size: 1.18rem; font-weight: 900; }
+    .nav-logo-text .brand-laundry { color: var(--navy); font-size: 1.18rem; font-weight: 900; }
+
+    .nav-links {
+      display: flex; gap: 2.2rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+      transition: color .2s;
       position: relative;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(2px 2px at 12% 18%, rgba(255,255,255,0.9), transparent 60%),
-        radial-gradient(1.5px 1.5px at 25% 72%, rgba(255,255,255,0.75), transparent 60%),
-        radial-gradient(2px 2px at 40% 25%, rgba(255,255,255,0.85), transparent 60%),
-        radial-gradient(1.5px 1.5px at 58% 82%, rgba(255,255,255,0.75), transparent 60%),
-        radial-gradient(2px 2px at 72% 30%, rgba(255,255,255,0.85), transparent 60%),
-        radial-gradient(1.5px 1.5px at 88% 68%, rgba(255,255,255,0.8), transparent 60%),
-        radial-gradient(1.5px 1.5px at 78% 8%, rgba(255,255,255,0.7), transparent 60%),
-        radial-gradient(2px 2px at 8% 82%, rgba(255,255,255,0.8), transparent 60%),
-        radial-gradient(1px 1px at 52% 10%, rgba(255,255,255,0.7), transparent 60%),
-        radial-gradient(1px 1px at 33% 53%, rgba(255,255,255,0.65), transparent 60%),
-        radial-gradient(1px 1px at 65% 52%, rgba(255,255,255,0.7), transparent 60%),
-        radial-gradient(1px 1px at 92% 42%, rgba(255,255,255,0.65), transparent 60%);
-      opacity: 0.75;
-      z-index: 0;
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--teal);
+      transition: width .25s;
     }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
 
-    .navbar {
-      background: rgba(5, 7, 13, 0.78);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      transition: background 0.25s ease, box-shadow 0.25s ease;
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 800 !important;
+      transition: background .2s, transform .15s !important;
     }
+    .nav-cta:hover { background: var(--teal-dark) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
 
-    .navbar-brand {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: 1px;
-    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 2.5px; background: var(--navy); border-radius: 2px; transition: .3s; }
 
-    .nav-link {
-      color: rgba(255,255,255,0.82) !important;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-
-    .nav-link:hover {
-      color: white !important;
-      transform: translateY(-1px);
-    }
-
-    .btn-brand {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      border: none;
-      color: white;
-      padding: 0.85rem 1.35rem;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 10px 30px rgba(124, 92, 255, 0.25);
-    }
-
-    .btn-brand:hover {
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(0, 212, 255, 0.2);
-    }
-
-    .btn-outline-light-custom {
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.03);
-      color: white;
-      padding: 0.85rem 1.35rem;
-      border-radius: 999px;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .btn-outline-light-custom:hover {
-      color: white;
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.08);
-    }
-
+    /* ── HERO ────────────────────────────────────── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 7rem 0 4rem;
+      background: linear-gradient(135deg, #E8F7F6 0%, #F2F9FA 40%, #EAF3F7 100%);
+      display: flex; align-items: center;
+      padding: 100px 6vw 60px;
       position: relative;
-      z-index: 1;
+      overflow: hidden;
     }
 
-    .hero-content, .hero-visual { position: relative; z-index: 2; }
+    .hero-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-bg-circle.c1 {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(24,184,174,0.13) 0%, transparent 70%);
+      top: -120px; right: -80px;
+    }
+    .hero-bg-circle.c2 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(28,43,74,0.06) 0%, transparent 70%);
+      bottom: -60px; left: -60px;
+    }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 0.85rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 1rem;
-      animation: fadeUp 0.7s ease forwards;
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
+      width: 100%;
+    }
+
+    .hero-text { animation: fadeUp .8s ease both; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white);
+      border: 1.5px solid rgba(24,184,174,0.3);
+      color: var(--teal-dark);
+      font-size: 0.8rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(24,184,174,0.12);
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px; background: var(--teal);
+      border-radius: 50%; animation: pulse 1.8s infinite;
     }
 
     .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      line-height: 0.96;
-      margin-bottom: 1rem;
-      animation: fadeUp 0.8s ease forwards;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--teal); }
+
+    .hero-sub {
+      font-size: 1.08rem; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 38px;
+      max-width: 460px;
     }
 
-    .hero h1 span {
-      background: linear-gradient(90deg, #fff, var(--accent-2), var(--accent-3));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
 
-    .hero p {
-      color: var(--muted);
-      max-width: 610px;
-      font-size: 1.06rem;
-      animation: fadeUp 0.95s ease forwards;
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 800; font-size: 0.98rem;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 24px rgba(24,184,174,0.35);
+      transition: background .2s, transform .15s, box-shadow .2s;
     }
+    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(24,184,174,0.4); }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.6rem;
-      animation: fadeUp 1.05s ease forwards;
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      padding: 13px 30px;
+      border-radius: 50px;
+      font-weight: 800; font-size: 0.98rem;
+      text-decoration: none;
+      transition: background .2s, color .2s, transform .15s;
     }
+    .btn-outline:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
 
-    .visual-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 500px;
+    .hero-stats {
+      display: flex; gap: 36px;
+    }
+    .stat { }
+    .stat-num {
+      font-size: 1.8rem; font-weight: 900; color: var(--navy);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--teal); }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      animation: fadeUp .8s .2s ease both;
       position: relative;
-      animation: fadeIn 0.9s ease forwards;
     }
-
-    .character-card,
-    .logo-core,
-    .floating-card,
-    .glass-card,
-    .stat-box {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid rgba(255,255,255,0.1);
+    .hero-img-wrap {
+      position: relative;
+      width: 100%; max-width: 480px;
     }
-
-    .character-card {
-      width: 230px;
-      height: 390px;
-      border-radius: 28px;
+    .hero-img-wrap img {
+      width: 100%; border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-float-badge {
       position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%) rotate(-5deg);
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 0.85rem; color: var(--navy);
+    }
+    .hero-float-badge .icon { font-size: 1.5rem; }
+    .badge-top { top: -18px; left: -28px; animation: floatBadge1 3s ease-in-out infinite; }
+    .badge-btm { bottom: -18px; right: -28px; animation: floatBadge2 3s .5s ease-in-out infinite; }
+    .badge-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; }
+
+    /* ── MARQUEE STRIP ───────────────────────────── */
+    .strip {
+      background: var(--navy);
+      padding: 14px 0;
       overflow: hidden;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.28);
-    }
-
-    .character-card::before {
-      content: "YOUR CHARACTER";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.85);
-      background: linear-gradient(180deg, rgba(124,92,255,0.18), rgba(0,212,255,0.08));
-    }
-
-    .logo-core {
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 40px rgba(124, 92, 255, 0.14);
-      isolation: isolate;
-    }
-
-    .logo-core::before {
-      content: "";
-      position: absolute;
-      inset: -18px;
-      background: conic-gradient(from 0deg, rgba(124,92,255,0.85), rgba(0,212,255,0.65), rgba(255,78,205,0.55), rgba(124,92,255,0.85));
-      animation: spin 14s linear infinite;
-      will-change: transform;
-    }
-
-    .logo-core::after {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #080b14, #101a2f);
-      z-index: 1;
-    }
-
-    .logo-text {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.1rem;
+    }
+    .strip-inner {
+      display: flex; gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    .strip-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0 32px;
+      color: var(--white);
+      font-weight: 700; font-size: 0.88rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .strip-dot { color: var(--teal); font-size: 1.4rem; }
+
+    /* ── SERVICES ────────────────────────────────── */
+    .services {
+      padding: 100px 6vw;
+      background: var(--white);
+    }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      display: inline-block;
+      color: var(--teal); font-weight: 800; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900; color: var(--navy);
+      line-height: 1.2;
+    }
+    .section-header p {
+      color: var(--text-muted); margin-top: 14px;
+      font-size: 1rem; line-height: 1.7; max-width: 520px; margin-left: auto; margin-right: auto;
     }
 
-    .site-logo {
-      width: 88%;
-      max-width: 260px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.28));
+    .services-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
     }
 
-    .floating-card {
-      position: absolute;
-      border-radius: 18px;
-      padding: 0.85rem 1rem;
-      min-width: 170px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
-    }
-
-    .card-top { top: 12%; right: 0; }
-    .card-bottom { right: 8%; bottom: 8%; }
-
-    .floating-card small { color: var(--muted); display: block; margin-bottom: 0.25rem; }
-    .floating-card strong { font-size: 1rem; }
-
-    .services, .mini-stats, .pb-5 { position: relative; z-index: 1; }
-    .services { padding: 5rem 0; }
-    .mini-stats { padding: 1rem 0 5rem; }
-
-    .section-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.9rem, 4vw, 3rem);
-      margin-bottom: 0.8rem;
-    }
-
-    .section-subtitle {
-      color: var(--muted);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-    }
-
-    .glass-card {
-      border-radius: 22px;
-      padding: 1.5rem;
-      height: 100%;
-      transition: transform 0.22s ease, border-color 0.22s ease;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(124, 92, 255, 0.45);
-    }
-
-    .icon-box {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 1.35rem;
-      background: linear-gradient(135deg, rgba(124,92,255,0.16), rgba(0,212,255,0.1));
-      border: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 1rem;
-    }
-
-    .glass-card p, .stat-box p { color: var(--muted); margin-bottom: 0; }
-
-    .stat-box {
+    .service-card {
+      background: var(--grey-bg);
+      border-radius: 24px;
+      padding: 36px 28px;
       text-align: center;
-      padding: 1.2rem;
-      border-radius: 20px;
-    }
-
-    .stat-box h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
-      margin-bottom: 0.35rem;
-    }
-
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 2rem 0;
-      color: var(--muted);
-      background: rgba(0,0,0,0.14);
+      transition: transform .25s, box-shadow .25s;
       position: relative;
-      z-index: 1;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 72px; height: 72px; border-radius: 20px;
+      background: var(--teal-pale);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+      transition: background .2s;
+    }
+    .service-card:hover .service-icon { background: var(--teal); }
+
+    .service-card h3 {
+      font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.65;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 18px; color: var(--teal); font-weight: 800; font-size: 0.85rem;
+      text-decoration: none; transition: gap .2s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ── HOW IT WORKS ────────────────────────────── */
+    .how {
+      background: var(--navy);
+      padding: 100px 6vw;
+      position: relative; overflow: hidden;
+    }
+    .how::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2318B8AE' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .how .section-tag { color: var(--teal); }
+    .how .section-header h2 { color: var(--white); }
+    .how .section-header p { color: rgba(255,255,255,0.6); }
+
+    .how-steps {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px; position: relative;
+    }
+    .how-steps::before {
+      content: '';
+      position: absolute; top: 44px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      opacity: .3;
     }
 
-    [data-reveal] {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+    .step {
+      text-align: center; position: relative;
+    }
+    .step-num {
+      width: 88px; height: 88px; border-radius: 50%;
+      border: 2.5px solid rgba(24,184,174,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+      background: rgba(24,184,174,0.07);
+      transition: border-color .3s, background .3s;
+    }
+    .step:hover .step-num { border-color: var(--teal); background: rgba(24,184,174,0.15); }
+    .step-circle-label {
+      position: absolute; top: -8px; right: calc(50% - 55px);
+      background: var(--teal); color: var(--white);
+      width: 24px; height: 24px; border-radius: 50%;
+      font-size: 0.7rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step h3 { color: var(--white); font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
+    .step p { color: rgba(255,255,255,0.55); font-size: 0.88rem; line-height: 1.65; }
+
+    /* ── WHY US ──────────────────────────────────── */
+    .why {
+      padding: 100px 6vw;
+      background: var(--grey-bg);
+    }
+    .why-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 80px;
+    }
+    .why-visual img {
+      width: 100%; border-radius: 28px; box-shadow: var(--shadow-lg);
+    }
+    .why-visual {
+      position: relative;
+    }
+    .why-visual-badge {
+      position: absolute;
+      bottom: -24px; right: -24px;
+      background: var(--teal);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 12px 32px rgba(24,184,174,0.4);
+      text-align: center;
+    }
+    .why-visual-badge .big { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+    .why-visual-badge .small { font-size: 0.75rem; font-weight: 700; opacity: .88; margin-top: 4px; }
+
+    .why-text .section-header { text-align: left; margin-bottom: 36px; }
+    .why-text .section-header h2 { font-size: clamp(1.8rem, 2.8vw, 2.4rem); }
+
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .why-item {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .why-item-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--teal-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      color: var(--teal);
+    }
+    .why-item-text h4 { font-size: 0.97rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .why-item-text p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── TESTIMONIALS ────────────────────────────── */
+    .testimonials {
+      padding: 100px 6vw;
+      background: var(--white);
+    }
+    .testimonials-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 26px;
+    }
+    .tcard {
+      background: var(--grey-bg);
+      border-radius: 24px; padding: 32px 28px;
+      border: 1.5px solid transparent;
+      transition: border-color .25s, box-shadow .25s;
+      position: relative;
+    }
+    .tcard:hover { border-color: rgba(24,184,174,0.3); box-shadow: var(--shadow); }
+    .tcard-quote { font-size: 2.5rem; color: var(--teal); line-height: 1; margin-bottom: 14px; }
+    .tcard p { font-size: 0.93rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 22px; }
+    .tcard-author { display: flex; align-items: center; gap: 12px; }
+    .tcard-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-weight: 900; font-size: 1rem;
+    }
+    .tcard-name { font-weight: 800; font-size: 0.9rem; color: var(--navy); }
+    .tcard-role { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .tcard-stars { color: #F59E0B; font-size: 0.85rem; margin-bottom: 6px; }
+
+    /* ── CTA BAND ─────────────────────────────────── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      padding: 80px 6vw;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .cta-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 14px;
+    }
+    .cta-band p { color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-white {
+      background: var(--white); color: var(--teal);
+      padding: 15px 38px; border-radius: 50px;
+      font-weight: 900; font-size: 1rem; text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.2); }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 70px 6vw 30px;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    .footer-brand img { height: 54px; margin-bottom: 16px; filter: brightness(10); }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+    .footer-brand .motto { color: var(--teal); font-weight: 700; font-style: italic; font-size: 0.85rem; margin-top: 10px; }
+
+    .footer-col h4 { color: var(--white); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--teal); }
+
+    .footer-contact li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; }
+    .footer-contact li span:first-child { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 26px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom a { color: var(--teal); text-decoration: none; }
+
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 38px; height: 38px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); font-size: 1rem; text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .social-link:hover { border-color: var(--teal); color: var(--teal); background: rgba(24,184,174,0.1); }
+
+    /* ── ANIMATIONS ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes floatBadge1 {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-8px) rotate(-3deg); }
+    }
+    @keyframes floatBadge2 {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50%       { transform: translateY(-10px) rotate(2deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.3); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
-    [data-reveal].active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px);} to { opacity: 1; transform: translateY(0);} }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-      [data-reveal] { opacity: 1; transform: none; }
-    }
-
-    @media (max-width: 991px) {
-      .hero { text-align: center; }
-      .hero p { margin-left: auto; margin-right: auto; }
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
       .hero-actions { justify-content: center; }
-      .visual-wrap { margin-top: 2.5rem; min-height: 520px; }
-      .character-card {
-        position: relative;
-        left: auto;
-        top: auto;
-        transform: none;
-        width: 180px;
-        height: 280px;
-        margin-right: 1rem;
-      }
-      .logo-core { width: 280px; height: 280px; }
+      .hero-stats { justify-content: center; }
+      .hero-visual { margin-top: 20px; }
+      .why-inner { grid-template-columns: 1fr; }
+      .why-visual-badge { display: none; }
+      .why-text .section-header { text-align: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .how-steps::before { display: none; }
+      nav .nav-links { display: none; }
+      .hamburger { display: flex; }
     }
-
-    @media (max-width: 767px) {
-      .visual-wrap { display: block; min-height: auto; }
-      .character-card, .logo-core, .floating-card {
-        position: relative;
-        inset: auto;
-        margin: 0 auto 1rem;
-        transform: none;
-      }
+    @media (max-width: 550px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#home">Lilfromdahill</a>
-      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link " href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-          <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item ms-lg-2 mt-3 mt-lg-0"><a class="btn btn-brand" href="contact.html">Book Now</a></li>
-        </ul>
-      </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="logo.jpg" alt="SUB-way Laundry Logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="services.html" class="nav-cta">Book Now</a></li>
+    </ul>
+    <div class="hamburger" onclick="this.classList.toggle('open')">
+      <span></span><span></span><span></span>
     </div>
   </nav>
 
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6 hero-content">
-          <div class="eyebrow">
-            <i class="bi bi-stars"></i>
-            Creative visuals for artists, brands, and content creators
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          Now Available in Your Area
+        </div>
+        <h1>We Pick Up,<br>We Clean,<br><span>We Deliver.</span></h1>
+        <p class="hero-sub">Premium laundry &amp; dry-cleaning services brought straight to your doorstep. No more laundromat trips — we handle everything for you.</p>
+        <div class="hero-actions">
+          <a href="services.html" class="btn-primary">📦 Book a Pickup</a>
+          <a href="services.html" class="btn-outline">View Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">2K<span>+</span></div>
+            <div class="stat-label">Happy Customers</div>
           </div>
-          <h1>
-            Build your <span>vision</span><br>
-            in the stars.
-          </h1>
-          <p>
-            Lilfromdahill creates music videos, visualizers, skits, logos, and art designs with a dark cinematic vibe and a clean professional look.
-          </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn btn-brand">Start Your Project</a>
-            <a href="#services" class="btn btn-outline-light-custom">Explore Services</a>
+          <div class="stat">
+            <div class="stat-num">24<span>h</span></div>
+            <div class="stat-label">Turnaround</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4.9<span>★</span></div>
+            <div class="stat-label">Avg. Rating</div>
           </div>
         </div>
-
-        <div class="col-lg-6 hero-visual">
-          <div class="visual-wrap">
-            <div class="character-card"></div>
-
-            <div class="logo-core">
-              <div class="logo-text">
-                <img src="logo.jpg" alt="Lilfromdahill logo" class="site-logo">
-              </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-img-wrap">
+          <img src="logo.jpg" alt="SUB-way Laundry Service" />
+          <div class="hero-float-badge badge-top">
+            <span class="icon">✅</span>
+            <div>
+              <div>Order Confirmed</div>
+              <div class="badge-label">Pickup in 30 mins</div>
             </div>
-
-            <div class="floating-card card-top">
-              <small>Featured Service</small>
-              <strong>Music Visualizers</strong>
-            </div>
-
-            <div class="floating-card card-bottom">
-              <small>Creative Stack</small>
-              <strong>Logos • Skits • Artwork</strong>
+          </div>
+          <div class="hero-float-badge badge-btm">
+            <span class="icon">🚚</span>
+            <div>
+              <div>Out for Delivery</div>
+              <div class="badge-label">Fresh &amp; Clean</div>
             </div>
           </div>
         </div>
@@ -453,210 +640,255 @@
     </div>
   </section>
 
-  <section class="services text-center" id="services">
-    <div class="container">
-      <h2 class="section-title" data-reveal>What We Create</h2>
-      <p class="section-subtitle" data-reveal>
-        Premium creative work for musicians, entertainers, and brands that want a sharp identity with a cosmic edge.
-      </p>
-      <div class="row g-4 mt-2">
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-camera-reels"></i></div>
-            <h4>Music Videos</h4>
-            <p>Cinematic edits and concepts that give your sound real visual impact.</p>
+  <!-- MARQUEE STRIP -->
+  <div class="strip">
+    <div class="strip-inner">
+      <span class="strip-item"><span class="strip-dot">●</span> Wash &amp; Fold</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Dry Cleaning</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Shoe Cleaning</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Express Service</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Door-to-Door Pickup</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Curtains &amp; Duvets</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Wash &amp; Fold</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Dry Cleaning</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Shoe Cleaning</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Express Service</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Door-to-Door Pickup</span>
+      <span class="strip-item"><span class="strip-dot">●</span> Curtains &amp; Duvets</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-header">
+      <div class="section-tag">What We Offer</div>
+      <h2>Our Laundry Services</h2>
+      <p>From everyday essentials to delicate fabrics, we treat every garment with professional care.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">👕</div>
+        <h3>Wash &amp; Fold</h3>
+        <p>Drop off or schedule a pickup — your clothes come back neatly washed, dried, and folded to perfection.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧥</div>
+        <h3>Dry Cleaning</h3>
+        <p>Professional dry cleaning for suits, dresses, and delicate fabrics that require special care.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👟</div>
+        <h3>Shoe Cleaning</h3>
+        <p>We restore your sneakers and shoes to a like-new condition using specialist cleaning techniques.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛏️</div>
+        <h3>Duvets &amp; Bedding</h3>
+        <p>Bulky items handled with ease. Duvets, pillows, blankets, and comforters thoroughly cleaned.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🪟</div>
+        <h3>Curtains &amp; Linen</h3>
+        <p>Expert care for household curtains, tablecloths, and linen — fresh and ready to hang.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Express Service</h3>
+        <p>Need it fast? Our express same-day service gets your laundry done and back within hours.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-header">
+      <div class="section-tag">Simple Process</div>
+      <h2>How It Works</h2>
+      <p>Getting your laundry done has never been this easy. Four simple steps to fresh, clean clothes.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-num">📱<div class="step-circle-label">1</div></div>
+        <h3>Book Online</h3>
+        <p>Schedule your pickup via our website or WhatsApp. Choose your service and preferred time.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">🚪<div class="step-circle-label">2</div></div>
+        <h3>We Pick Up</h3>
+        <p>Our driver arrives at your door to collect your laundry in a clean, sealed bag.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">🧺<div class="step-circle-label">3</div></div>
+        <h3>We Clean</h3>
+        <p>Your clothes are professionally washed, dried, and carefully handled at our facility.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">🚚<div class="step-circle-label">4</div></div>
+        <h3>We Deliver</h3>
+        <p>Fresh laundry is delivered back to your doorstep, neatly folded or on hangers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why" id="why">
+    <div class="why-inner">
+      <div class="why-visual">
+        <img src="logo.jpg" alt="Professional Laundry" />
+        <div class="why-visual-badge">
+          <div class="big">100%</div>
+          <div class="small">Satisfaction<br>Guaranteed</div>
+        </div>
+      </div>
+      <div class="why-text">
+        <div class="section-header">
+          <div class="section-tag">Why Choose Us</div>
+          <h2>The SUB-way Difference</h2>
+          <p>We combine professional-grade cleaning with the convenience of doorstep delivery.</p>
+        </div>
+        <ul class="why-list">
+          <li class="why-item">
+            <div class="why-item-icon">🏠</div>
+            <div class="why-item-text">
+              <h4>Doorstep Convenience</h4>
+              <p>We come to you — no more weekend trips to the laundromat. Book, and we handle the rest.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">🌿</div>
+            <div class="why-item-text">
+              <h4>Eco-Friendly Products</h4>
+              <p>We use safe, biodegradable detergents that are gentle on your clothes and the planet.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">⏰</div>
+            <div class="why-item-text">
+              <h4>Fast Turnaround</h4>
+              <p>Standard 24-hour turnaround, with express options available for urgent needs.</p>
+            </div>
+          </li>
+          <li class="why-item">
+            <div class="why-item-icon">🔒</div>
+            <div class="why-item-text">
+              <h4>Safe &amp; Trusted</h4>
+              <p>Your items are tracked from pickup to delivery. We treat every garment with utmost care.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="section-header">
+      <div class="section-tag">Customer Reviews</div>
+      <h2>What Our Clients Say</h2>
+      <p>Hundreds of happy customers trust SUB-way Laundry every week.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"</div>
+        <p>Absolutely amazing service! They picked up my laundry in the morning and had it back by evening — spotlessly clean. Will never go to a laundromat again.</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">TM</div>
+          <div>
+            <div class="tcard-name">Thabo Mokoena</div>
+            <div class="tcard-role">Johannesburg, Gauteng</div>
           </div>
         </div>
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-soundwave"></i></div>
-            <h4>Visualizers</h4>
-            <p>Animated visuals that keep your music alive with motion and atmosphere.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"</div>
+        <p>My white shirts came back looking brand new! The shoe cleaning service is also incredible. Highly recommended to everyone.</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">PN</div>
+          <div>
+            <div class="tcard-name">Palesa Nkosi</div>
+            <div class="tcard-role">Soweto, Gauteng</div>
           </div>
         </div>
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-film"></i></div>
-            <h4>Skits</h4>
-            <p>Short creative pieces built for entertainment, branding, and social media attention.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-badge-ad"></i></div>
-            <h4>Logos</h4>
-            <p>Professional logo design that makes your name look serious and memorable.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-palette"></i></div>
-            <h4>Art Designs</h4>
-            <p>Cover art, posters, promo content, and custom digital visuals that stand out.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-4" data-reveal>
-          <div class="glass-card">
-            <div class="icon-box"><i class="bi bi-lightning-charge"></i></div>
-            <h4>Creative Direction</h4>
-            <p>Visual planning and style direction for a consistent and powerful brand image.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-stars">★★★★★</div>
+        <div class="tcard-quote">"</div>
+        <p>The convenience is unmatched. I booked on WhatsApp, they were at my door in 20 minutes. Great prices too. SUB-way Laundry is the real deal!</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">KD</div>
+          <div>
+            <div class="tcard-name">Kagiso Dlamini</div>
+            <div class="tcard-role">Sandton, Gauteng</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="services text-center" id="portfolio">
-    <div class="container">
-      <h2 class="section-title" data-reveal>Portfolio</h2>
-      <p class="section-subtitle" data-reveal>
-        A preview of the kind of visuals, edits, and branding work Lilfromdahill can deliver.
-      </p>
-      <div class="row g-4 mt-2">
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>Music Video Edits</h4>
-            <p>High-energy cuts, effects, and color work for artists who want bold visuals.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>Visualizer Concepts</h4>
-            <p>Animated scenes and motion graphics made to keep tracks visually alive.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>Brand Design</h4>
-            <p>Logos, cover art, and custom graphics that make a name look official.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <h2>Ready for Fresher Clothes?</h2>
+    <p>Book your first pickup today and experience the SUB-way difference. We deliver clean to your door.</p>
+    <a href="services.html"" class="btn-white">📦 Schedule a Pickup</a>
   </section>
 
-  <section class="services text-center" id="pricing">
-    <div class="container">
-      <h2 class="section-title" data-reveal>Pricing</h2>
-      <p class="section-subtitle" data-reveal>
-        Flexible packages for different levels of creative work.
-      </p>
-      <div class="row g-4 mt-2">
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card">
-            <h4>Starter</h4>
-            <p>Great for simple edits, logo concepts, and basic visual content.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card">
-            <h4>Pro</h4>
-            <p>Ideal for artists and creators who want stronger visuals and more polish.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card">
-            <h4>Custom</h4>
-            <p>For full creative direction, advanced edits, and unique project requests.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="mini-stats" id="about">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-md-4" data-reveal>
-          <div class="stat-box">
-            <h3>Dark</h3>
-            <p>Night-sky inspired visuals with deep color and atmosphere.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="stat-box">
-            <h3>Sharp</h3>
-            <p>Clean execution with polished structure and professional style.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="stat-box">
-            <h3>Custom</h3>
-            <p>Each project built around the artist, sound, and visual identity.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="services text-center" id="faq">
-    <div class="container">
-      <h2 class="section-title" data-reveal>FAQ</h2>
-      <p class="section-subtitle" data-reveal>
-        Quick answers before you book a project.
-      </p>
-      <div class="row g-4 mt-2">
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>How long does work take?</h4>
-            <p>It depends on the project size, but turnaround times are discussed before work starts.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>Do you do custom work?</h4>
-            <p>Yes. Every client can request something built around their own style and needs.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-reveal>
-          <div class="glass-card text-start">
-            <h4>How do I book?</h4>
-            <p>Use the contact section and send the project idea, timeline, and what you need done.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pb-5" id="contact">
-    <div class="container">
-      <div class="glass-card text-center" data-reveal>
-        <h2 class="section-title mb-3">Let’s Create Something Crazy</h2>
-        <p class="section-subtitle mb-4">
-          Ready to build visuals that hit hard and look expensive? Let’s make it happen.
-        </p>
-        <a href="mailto:your@email.com" class="btn btn-brand">Contact Lilfromdahill</a>
-      </div>
-    </div>
-  </section>
-
+  <!-- FOOTER -->
   <footer>
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-      <span>© 2026 Lilfromdahill. All rights reserved.</span>
-      <span>Built for visual impact.</span>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="SUB-way Laundry" />
+        <p>Professional laundry services delivered right to your door. Clean clothes, zero hassle.</p>
+        <p class="motto">"We offer services at your door step, we deliver."</p>
+        <div class="social-links" style="margin-top:20px">
+          <a href="#" class="social-link">📘</a>
+          <a href="#" class="social-link">📸</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Wash &amp; Fold</a></li>
+          <li><a href="services.html">Dry Cleaning</a></li>
+          <li><a href="services.html">Shoe Cleaning</a></li>
+          <li><a href="services.html">Duvets &amp; Bedding</a></li>
+          <li><a href="services.html">Express Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact Us</h4>
+        <ul>
+          <li><span>📍</span><span>Johannesburg, Gauteng, South Africa</span></li>
+          <li><span>📞</span><span>+27 XX XXX XXXX</span></li>
+          <li><span>📧</span><span>hello@subwaylaundry.co.za</span></li>
+          <li><span>🕐</span><span>Mon–Sat: 7am – 7pm<br>Sun: 9am – 4pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SUB-way Laundry. All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const revealItems = document.querySelectorAll('[data-reveal]');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    revealItems.forEach(item => observer.observe(item));
-
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 30) {
-        navbar.style.background = 'rgba(5, 7, 13, 0.92)';
-        navbar.style.boxShadow = '0 8px 20px rgba(0,0,0,0.18)';
-      } else {
-        navbar.style.background = 'rgba(5, 7, 13, 0.78)';
-        navbar.style.boxShadow = 'none';
-      }
-    }, { passive: true });
-  </script>
 </body>
 </html>
