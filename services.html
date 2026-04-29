@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services – SUB-way Laundry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:      #18B8AE;
+      --teal-dark: #0E9990;
+      --teal-pale: #E0F7F6;
+      --navy:      #1C2B4A;
+      --navy-mid:  #2C3E60;
+      --white:     #FFFFFF;
+      --grey-bg:   #F2F7F9;
+      --text:      #1C2B4A;
+      --text-muted:#5A6E8C;
+      --radius:    16px;
+      --shadow:    0 8px 32px rgba(28,43,74,0.10);
+      --shadow-lg: 0 20px 60px rgba(28,43,74,0.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--grey-bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(24,184,174,0.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      height: 72px;
+      box-shadow: 0 2px 16px rgba(28,43,74,0.07);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--navy); font-weight: 700;
+      font-size: 0.92rem; letter-spacing: 0.02em; transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--teal); transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--teal); }
+    .nav-cta {
+      background: var(--teal); color: var(--white) !important;
+      padding: 10px 22px; border-radius: 50px; font-weight: 800 !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--teal-dark) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; border: none; background: none; z-index: 101;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2.5px;
+      background: var(--navy); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* ── PAGE HEADER ─────────────────────────────── */
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 140px 6vw 90px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%2318B8AE' fill-opacity='0.07'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-glow {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 450px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(24,184,174,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header .tag {
+      display: inline-block; color: var(--teal); font-weight: 800;
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 14px; position: relative;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 16px; position: relative; line-height: 1.1;
+    }
+    .page-header h1 span { color: var(--teal); }
+    .page-header p {
+      color: rgba(255,255,255,0.65); font-size: 1rem;
+      max-width: 540px; margin: 0 auto 40px; line-height: 1.75; position: relative;
+    }
+
+    /* pill stats in header */
+    .header-pills {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      position: relative;
+    }
+    .header-pill {
+      background: rgba(255,255,255,0.09);
+      border: 1.5px solid rgba(24,184,174,0.3);
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-size: 0.82rem; font-weight: 800;
+      color: rgba(255,255,255,0.88);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .header-pill span { color: var(--teal); }
+
+    /* ── PROMISE STRIP ───────────────────────────── */
+    .promise-strip {
+      background: var(--teal);
+      padding: 20px 6vw;
+      overflow: hidden;
+    }
+    .promise-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .promise-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--white); font-weight: 800; font-size: 0.87rem;
+    }
+    .promise-icon { font-size: 1.3rem; }
+
+    /* ── SECTION WRAPPER ─────────────────────────── */
+    .section-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 6vw;
+    }
+
+    .section-label {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 40px; margin-top: 70px;
+    }
+    .section-label-line {
+      flex: 1; height: 2px;
+      background: linear-gradient(90deg, rgba(24,184,174,0.3), transparent);
+    }
+    .section-label-text {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label-tag {
+      color: var(--teal); font-weight: 900; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .section-label-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--teal); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.82rem; flex-shrink: 0;
+    }
+
+    /* ── SERVICE BLOCK ───────────────────────────── */
+    /* Alternating left/right layout */
+    .service-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--white);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .service-block:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .service-block.reverse { direction: rtl; }
+    .service-block.reverse > * { direction: ltr; }
+
+    .service-images {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+    }
+    .service-images img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity .5s, transform .6s;
+    }
+    .service-images img.img-secondary {
+      opacity: 0;
+    }
+    .service-block:hover .service-images img.img-primary { opacity: 0; transform: scale(1.04); }
+    .service-block:hover .service-images img.img-secondary { opacity: 1; transform: scale(1.04); }
+
+    /* hover overlay gradient */
+    .service-images::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(24,184,174,0.18), transparent 60%);
+      pointer-events: none;
+      opacity: 0; transition: opacity .3s;
+    }
+    .service-block:hover .service-images::after { opacity: 1; }
+
+    /* image badge */
+    .img-badge {
+      position: absolute; bottom: 18px; left: 18px; z-index: 2;
+      background: var(--teal);
+      color: white; font-weight: 900; font-size: 0.78rem;
+      padding: 6px 14px; border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(24,184,174,0.4);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .3s, transform .3s;
+    }
+    .service-block:hover .img-badge { opacity: 1; transform: translateY(0); }
+
+    .service-content {
+      padding: 44px 40px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .service-content .category {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--teal-pale);
+      color: var(--teal-dark); font-weight: 800; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      padding: 5px 14px; border-radius: 50px;
+      margin-bottom: 16px; width: fit-content;
+    }
+    .service-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      font-weight: 900; color: var(--navy);
+      margin-bottom: 14px; line-height: 1.2;
+    }
+    .service-content p {
+      color: var(--text-muted); font-size: 0.93rem;
+      line-height: 1.75; margin-bottom: 24px;
+    }
+
+    /* feature tags */
+    .feature-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 28px;
+    }
+    .feature-tag {
+      background: var(--grey-bg);
+      border: 1.5px solid #D8ECF0;
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 0.78rem; font-weight: 700; color: var(--navy);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    .service-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal); color: white;
+      padding: 13px 26px; border-radius: 50px;
+      font-weight: 900; font-size: 0.9rem; text-decoration: none;
+      width: fit-content;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 18px rgba(24,184,174,0.3);
+    }
+    .service-cta:hover {
+      background: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(24,184,174,0.4);
+    }
+    .service-cta .arrow {
+      transition: transform .2s;
+    }
+    .service-cta:hover .arrow { transform: translateX(4px); }
+
+    /* ── PICKUP & DELIVERY SECTION ───────────────── */
+    .pickup-section {
+      background: var(--navy);
+      margin-top: 80px;
+      padding: 80px 6vw;
+      position: relative; overflow: hidden;
+    }
+    .pickup-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%2318B8AE' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .pickup-glow {
+      position: absolute; right: -100px; top: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(24,184,174,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pickup-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; position: relative;
+    }
+    .pickup-text .tag {
+      color: var(--teal); font-weight: 800; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 14px; display: block;
+    }
+    .pickup-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 16px; line-height: 1.15;
+    }
+    .pickup-text h2 span { color: var(--teal); }
+    .pickup-text p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem; line-height: 1.75; margin-bottom: 36px;
+    }
+    .pickup-steps {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .pickup-step {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .pickup-step-num {
+      width: 42px; height: 42px; flex-shrink: 0;
+      border-radius: 12px; background: rgba(24,184,174,0.15);
+      border: 1.5px solid rgba(24,184,174,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .pickup-step-text h4 { color: white; font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
+    .pickup-step-text p { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.5; margin: 0; }
+
+    .pickup-visual {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .pickup-card {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(24,184,174,0.2);
+      border-radius: 20px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: background .2s, border-color .2s;
+    }
+    .pickup-card:hover {
+      background: rgba(24,184,174,0.1);
+      border-color: rgba(24,184,174,0.45);
+    }
+    .pickup-card:first-child {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: 18px;
+      text-align: left;
+    }
+    .pickup-card-icon { font-size: 2.2rem; flex-shrink: 0; }
+    .pickup-card-icon-sm { font-size: 2rem; margin-bottom: 10px; }
+    .pickup-card-title { font-weight: 900; color: white; font-size: 1rem; margin-bottom: 4px; }
+    .pickup-card-desc { color: rgba(255,255,255,0.5); font-size: 0.82rem; line-height: 1.5; }
+
+    /* ── IRON & FOLD BANNER ──────────────────────── */
+    .iron-banner {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      margin: 70px 0 0;
+      padding: 60px 6vw;
+      position: relative; overflow: hidden;
+    }
+    .iron-banner::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .iron-banner-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap; position: relative;
+    }
+    .iron-banner-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 900; color: white; margin-bottom: 10px;
+    }
+    .iron-banner-text p {
+      color: rgba(255,255,255,0.8); font-size: 0.95rem;
+      line-height: 1.65; max-width: 480px;
+    }
+    .iron-features {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px;
+    }
+    .iron-feat {
+      background: rgba(255,255,255,0.15);
+      border-radius: 50px; padding: 7px 16px;
+      color: white; font-weight: 800; font-size: 0.82rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .iron-cta {
+      background: white; color: var(--teal);
+      padding: 15px 34px; border-radius: 50px;
+      font-weight: 900; font-size: 1rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+      transition: transform .15s, box-shadow .2s;
+      flex-shrink: 0;
+    }
+    .iron-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.2); }
+
+    /* ── FAQ / NOTES SECTION ─────────────────────── */
+    .notes-section {
+      padding: 70px 6vw 80px;
+    }
+    .notes-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .notes-header { text-align: center; margin-bottom: 48px; }
+    .notes-header .tag {
+      display: inline-block; color: var(--teal); font-weight: 800;
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .notes-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 900; color: var(--navy);
+    }
+    .notes-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .note-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 28px 24px;
+      border: 2px solid transparent;
+      transition: border-color .25s, transform .25s;
+    }
+    .note-card:hover {
+      border-color: rgba(24,184,174,0.3);
+      transform: translateY(-4px);
+    }
+    .note-icon { font-size: 2rem; margin-bottom: 12px; }
+    .note-title { font-weight: 900; color: var(--navy); font-size: 1rem; margin-bottom: 8px; }
+    .note-text { color: var(--text-muted); font-size: 0.87rem; line-height: 1.65; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 70px 6vw 30px;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 50px; margin-bottom: 50px;
+    }
+    .footer-brand img { height: 54px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+    .footer-brand .motto { color: var(--teal); font-weight: 700; font-style: italic; font-size: 0.85rem; margin-top: 10px; }
+    .footer-col h4 { color: var(--white); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--teal); }
+    .footer-contact li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; }
+    .footer-contact li span:first-child { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 26px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom a { color: var(--teal); text-decoration: none; }
+
+    /* ── ANIMATIONS ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0; animation: fadeUp .7s ease forwards;
+    }
+    .fade-up-1 { animation-delay: .1s; }
+    .fade-up-2 { animation-delay: .2s; }
+    .fade-up-3 { animation-delay: .3s; }
+    .fade-up-4 { animation-delay: .4s; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { flex-wrap: wrap; height: auto; padding: 0 6vw; }
+      .nav-logo { height: 72px; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        width: 100%; background: var(--white);
+        border-top: 1px solid rgba(24,184,174,0.15);
+        padding: 12px 0 20px; order: 3;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block; padding: 13px 20px;
+        font-size: 1rem; border-radius: 10px;
+      }
+      .nav-links a::after { display: none; }
+      .nav-links a:hover { background: var(--teal-pale); color: var(--teal); }
+      .nav-cta { margin: 8px 20px 0; text-align: center; border-radius: 50px !important; padding: 13px 20px !important; }
+      .hamburger { display: flex; height: 72px; align-items: center; }
+
+      .service-block { grid-template-columns: 1fr; }
+      .service-block.reverse { direction: ltr; }
+      .service-images { min-height: 260px; }
+      .service-content { padding: 32px 24px; }
+      .pickup-inner { grid-template-columns: 1fr; }
+      .pickup-visual { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .promise-inner { justify-content: center; }
+    }
+    @media (max-width: 550px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .header-pills { gap: 8px; }
+      .iron-banner-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.jpg" alt="SUB-way Laundry Logo" />
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="booking.html" class="nav-cta">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="header-glow"></div>
+    <div class="tag fade-up">Everything We Offer</div>
+    <h1 class="fade-up fade-up-1">Our <span>Services</span>,<br>Your Convenience</h1>
+    <p class="fade-up fade-up-2">Professional cleaning for every fabric in your home — from everyday clothes to delicate curtains. We pick up, we clean, we deliver.</p>
+    <div class="header-pills fade-up fade-up-3">
+      <div class="header-pill"><span>🚗</span> Door-to-Door Pickup</div>
+      <div class="header-pill"><span>⚡</span> 24h Express Available</div>
+      <div class="header-pill"><span>💳</span> Pay on Delivery</div>
+      <div class="header-pill"><span>🌿</span> Eco-Friendly Products</div>
+    </div>
+  </div>
+
+  <!-- PROMISE STRIP -->
+  <div class="promise-strip">
+    <div class="promise-inner">
+      <div class="promise-item"><span class="promise-icon">✅</span> Professional Care</div>
+      <div class="promise-item"><span class="promise-icon">🔒</span> Items Tracked & Safe</div>
+      <div class="promise-item"><span class="promise-icon">👕</span> Iron & Fold Included</div>
+      <div class="promise-item"><span class="promise-icon">🚪</span> Pickup From Your Door</div>
+      <div class="promise-item"><span class="promise-icon">🚚</span> Delivered Clean & Fresh</div>
+    </div>
+  </div>
+
+  <!-- ════ SERVICES ════ -->
+  <div class="section-wrap" style="padding-bottom: 70px;">
+
+    <!-- Section label -->
+    <div class="section-label reveal">
+      <div class="section-label-text">
+        <div class="section-label-num">1</div>
+        <div class="section-label-tag">Core Services</div>
+      </div>
+      <div class="section-label-line"></div>
+    </div>
+
+    <!-- SERVICE 1: LAUNDRY -->
+    <div class="service-block reveal">
+      <div class="service-images">
+        <img src="laundry.jpg" alt="Laundry Service" class="img-primary" />
+        <img src="laundry2.jpg" alt="Fresh Laundry" class="img-secondary" />
+        <div class="img-badge">Hover to see more ✨</div>
+      </div>
+      <div class="service-content">
+        <div class="category">👕 Most Popular</div>
+        <h2>Laundry –<br>Wash, Iron & Fold</h2>
+        <p>Our core service covers everything — we collect your dirty laundry, machine wash it with your choice of premium detergent, professionally iron every garment, and neatly fold everything before delivering it back to your door. No effort on your part, just fresh, crisp clothes.</p>
+        <div class="feature-tags">
+          <div class="feature-tag">✅ Machine Washed</div>
+          <div class="feature-tag">🔥 Professionally Ironed</div>
+          <div class="feature-tag">📦 Neatly Folded</div>
+          <div class="feature-tag">🚗 Pickup & Delivery</div>
+          <div class="feature-tag">🌸 Fabric Softener Available</div>
+        </div>
+        <a href="booking.html" class="service-cta">Book Laundry <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SERVICE 2: CURTAINS -->
+    <div class="service-block reverse reveal">
+      <div class="service-images">
+        <img src="curtain.jpg" alt="Curtain Cleaning" class="img-primary" />
+        <img src="curtain2.jpg" alt="Clean Curtains" class="img-secondary" />
+        <div class="img-badge">Before & After ✨</div>
+      </div>
+      <div class="service-content">
+        <div class="category">🪟 Home Essentials</div>
+        <h2>Curtain Cleaning</h2>
+        <p>Curtains collect dust, allergens, and odours over time. We carefully remove, wash, and return your curtains looking and smelling fresh — ready to hang straight back up. We handle all fabric types and sizes.</p>
+        <div class="feature-tags">
+          <div class="feature-tag">🪟 All Fabric Types</div>
+          <div class="feature-tag">🌬️ Odour Removal</div>
+          <div class="feature-tag">💧 Gentle Wash Cycle</div>
+          <div class="feature-tag">🚗 Pickup & Delivery</div>
+        </div>
+        <a href="booking.html" class="service-cta">Book Curtain Clean <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SERVICE 3: SHOES -->
+    <div class="service-block reveal">
+      <div class="service-images">
+        <img src="shoes.jpeg" alt="Shoe Cleaning" class="img-primary" />
+        <img src="shoes2.jpeg" alt="Clean Shoes" class="img-secondary" />
+        <div class="img-badge">Like-new results ✨</div>
+      </div>
+      <div class="service-content">
+        <div class="category">👟 Specialist Clean</div>
+        <h2>Shoe Cleaning</h2>
+        <p>Give your favourite sneakers and shoes a new lease on life. Our specialist shoe cleaning service removes dirt, stains, and scuffs using professional techniques that are safe for all materials — leather, canvas, mesh, and more.</p>
+        <div class="feature-tags">
+          <div class="feature-tag">👟 All Shoe Types</div>
+          <div class="feature-tag">🧽 Deep Stain Removal</div>
+          <div class="feature-tag">✨ Sole & Lace Clean</div>
+          <div class="feature-tag">🚗 Pickup & Delivery</div>
+        </div>
+        <a href="booking.html" class="service-cta">Book Shoe Clean <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- Section label 2 -->
+    <div class="section-label reveal">
+      <div class="section-label-text">
+        <div class="section-label-num">2</div>
+        <div class="section-label-tag">Household Items</div>
+      </div>
+      <div class="section-label-line"></div>
+    </div>
+
+    <!-- SERVICE 4: DUVET -->
+    <div class="service-block reverse reveal">
+      <div class="service-images">
+        <img src="duvet.jpeg" alt="Duvet Cleaning" class="img-primary" />
+        <img src="duvet2.jpeg" alt="Clean Duvet" class="img-secondary" />
+        <div class="img-badge">Hygienically clean ✨</div>
+      </div>
+      <div class="service-content">
+        <div class="category">🛏️ Bulky Items</div>
+        <h2>Duvet Cleaning</h2>
+        <p>Duvets are too bulky for home washing machines — that's where we come in. We deep clean your duvets, comforters, and thick blankets using large-capacity commercial washers, ensuring they come out hygienically clean, fluffy, and fresh.</p>
+        <div class="feature-tags">
+          <div class="feature-tag">🛏️ All Duvet Sizes</div>
+          <div class="feature-tag">🌡️ Deep Sanitised Clean</div>
+          <div class="feature-tag">☁️ Fluffy & Fresh Result</div>
+          <div class="feature-tag">🚗 Pickup & Delivery</div>
+        </div>
+        <a href="booking.html" class="service-cta">Book Duvet Clean <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SERVICE 5: LINEN -->
+    <div class="service-block reveal">
+      <div class="service-images">
+        <img src="linen.jpg" alt="Linen Cleaning" class="img-primary" />
+        <img src="linen2.png" alt="Fresh Linen" class="img-secondary" />
+        <div class="img-badge">Crisp & pressed ✨</div>
+      </div>
+      <div class="service-content">
+        <div class="category">🏡 Home Linen</div>
+        <h2>Linen & Bedding</h2>
+        <p>From bed sheets and pillowcases to tablecloths and napkins — we wash, iron, and fold all your household linen to a crisp, hotel-quality finish. Your bedroom and dining table will look and feel immaculate.</p>
+        <div class="feature-tags">
+          <div class="feature-tag">🛏️ Bed Sheets & Pillowcases</div>
+          <div class="feature-tag">🍽️ Table Linen</div>
+          <div class="feature-tag">🔥 Crisp Ironed Finish</div>
+          <div class="feature-tag">🚗 Pickup & Delivery</div>
+        </div>
+        <a href="booking.html" class="service-cta">Book Linen Clean <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+  </div><!-- end section-wrap -->
+
+  <!-- IRON & FOLD BANNER -->
+  <div class="iron-banner">
+    <div class="iron-banner-inner">
+      <div class="iron-banner-text">
+        <h2>Ironing & Folding<br>Included In Every Order</h2>
+        <p>We don't just wash — every garment is professionally ironed and neatly folded before being delivered back to you. So you open the bag and everything is ready to wear or hang up straight away.</p>
+        <div class="iron-features">
+          <div class="iron-feat">🔥 Professional Iron</div>
+          <div class="iron-feat">📦 Neatly Folded</div>
+          <div class="iron-feat">👔 Hung on Hangers</div>
+          <div class="iron-feat">✅ No Extra Charge</div>
+        </div>
+      </div>
+      <a href="booking.html" class="iron-cta">📦 Book Now <span>→</span></a>
+    </div>
+  </div>
+
+  <!-- PICKUP & DELIVERY SECTION -->
+  <div class="pickup-section">
+    <div class="pickup-glow"></div>
+    <div class="pickup-inner">
+      <div class="pickup-text">
+        <span class="tag">How It Works</span>
+        <h2>We Pick Up &<br><span>We Deliver</span></h2>
+        <p>Forget the laundromat. Book your pickup online or via WhatsApp and we'll handle everything from your door — clean clothes come back to you.</p>
+        <div class="pickup-steps">
+          <div class="pickup-step">
+            <div class="pickup-step-num">📱</div>
+            <div class="pickup-step-text">
+              <h4>Book Online or on WhatsApp</h4>
+              <p>Choose your service, select your preferred time, and confirm your address in minutes.</p>
+            </div>
+          </div>
+          <div class="pickup-step">
+            <div class="pickup-step-num">🚗</div>
+            <div class="pickup-step-text">
+              <h4>We Collect From Your Door</h4>
+              <p>Our driver arrives at your chosen time and picks up your items in a clean, sealed bag.</p>
+            </div>
+          </div>
+          <div class="pickup-step">
+            <div class="pickup-step-num">🧺</div>
+            <div class="pickup-step-text">
+              <h4>We Clean, Iron & Fold</h4>
+              <p>Your items are professionally cleaned at our facility with your preferred detergent.</p>
+            </div>
+          </div>
+          <div class="pickup-step">
+            <div class="pickup-step-num">🚚</div>
+            <div class="pickup-step-text">
+              <h4>Delivered Fresh to You</h4>
+              <p>Clean laundry delivered back to your doorstep — folded, ironed, and ready to go.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pickup-visual">
+        <div class="pickup-card">
+          <div class="pickup-card-icon">🚪</div>
+          <div>
+            <div class="pickup-card-title">Doorstep Pickup</div>
+            <div class="pickup-card-desc">We come to you — no driving, no queuing, no hassle.</div>
+          </div>
+        </div>
+        <div class="pickup-card">
+          <div class="pickup-card-icon-sm">⏱️</div>
+          <div class="pickup-card-title">24h Express</div>
+          <div class="pickup-card-desc">Need it fast? Same-day or next-day turnaround available.</div>
+        </div>
+        <div class="pickup-card">
+          <div class="pickup-card-icon-sm">💳</div>
+          <div class="pickup-card-title">Pay on Delivery</div>
+          <div class="pickup-card-desc">No upfront payment. Pay only when your order arrives.</div>
+        </div>
+        <div class="pickup-card">
+          <div class="pickup-card-icon-sm">🔒</div>
+          <div class="pickup-card-title">Safe & Tracked</div>
+          <div class="pickup-card-desc">Your items are handled with care from pickup to delivery.</div>
+        </div>
+        <div class="pickup-card" style="grid-column: 1 / -1; text-align: center; flex-direction: column; align-items: center;">
+          <div style="font-size:2rem; margin-bottom: 10px;">🌿</div>
+          <div class="pickup-card-title">Eco-Friendly Detergents</div>
+          <div class="pickup-card-desc">We use biodegradable, skin-safe detergents — gentle on your clothes and the planet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOOD TO KNOW -->
+  <div class="notes-section">
+    <div class="notes-inner">
+      <div class="notes-header reveal">
+        <div class="tag">Good to Know</div>
+        <h2>A Few Tips Before We Arrive</h2>
+      </div>
+      <div class="notes-grid">
+        <div class="note-card reveal">
+          <div class="note-icon">⚠️</div>
+          <div class="note-title">Separate Whites & Colours</div>
+          <div class="note-text">Please separate your white clothes from your colourful ones before pickup. This prevents colour bleeding and ensures the best results for every garment.</div>
+        </div>
+        <div class="note-card reveal">
+          <div class="note-icon">🏷️</div>
+          <div class="note-title">Check Care Labels</div>
+          <div class="note-text">If any item has a special care label (dry clean only, delicate, etc.), please flag it when booking or leave a note — we'll treat it accordingly.</div>
+        </div>
+        <div class="note-card reveal">
+          <div class="note-icon">👟</div>
+          <div class="note-title">Shoes Cleaned Separately</div>
+          <div class="note-text">Shoes are handled as a separate service from clothing. Add it to your basket order or book it on its own — either way we collect everything together.</div>
+        </div>
+        <div class="note-card reveal">
+          <div class="note-icon">📅</div>
+          <div class="note-title">Book in Advance for Express</div>
+          <div class="note-text">For 24-hour turnaround, book your pickup before 10am. Orders placed after midday are treated as the following day's collection.</div>
+        </div>
+        <div class="note-card reveal">
+          <div class="note-icon">💬</div>
+          <div class="note-title">WhatsApp Us Anytime</div>
+          <div class="note-text">Prefer to chat? You can place orders, ask questions, or track your laundry directly via WhatsApp — we're always available.</div>
+        </div>
+        <div class="note-card reveal">
+          <div class="note-icon">💳</div>
+          <div class="note-title">Cash or EFT on Delivery</div>
+          <div class="note-text">We collect payment when your clean laundry arrives. No upfront payment, no surprises — just easy, trusted service.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="SUB-way Laundry" />
+        <p>Professional laundry services delivered right to your door. Clean clothes, zero hassle.</p>
+        <p class="motto">"We offer services at your door step, we deliver."</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Laundry & Wash</a></li>
+          <li><a href="services.html">Curtain Cleaning</a></li>
+          <li><a href="services.html">Shoe Cleaning</a></li>
+          <li><a href="services.html">Duvets & Linen</a></li>
+          <li><a href="booking.html">Express Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact Us</h4>
+        <ul>
+          <li><span>📍</span><span>Polokwane, Limpopo, South Africa</span></li>
+          <li><span>📞</span><span>+27 XX XXX XXXX</span></li>
+          <li><span>📧</span><span>hello@subwaylaundry.co.za</span></li>
+          <li><span>🕐</span><span>Mon–Sat: 7am – 7pm<br>Sun: 9am – 4pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SUB-way Laundry. All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Burger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', function () {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
