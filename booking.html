@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book now – SUB-way Laundry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    :root {
+      --teal:      #18B8AE;
+      --teal-dark: #0E9990;
+      --teal-pale: #E0F7F6;
+      --navy:      #1C2B4A;
+      --navy-mid:  #2C3E60;
+      --white:     #FFFFFF;
+      --grey-bg:   #F2F7F9;
+      --grey-card: #EAF2F4;
+      --text:      #1C2B4A;
+      --text-muted:#5A6E8C;
+      --radius:    16px;
+      --shadow:    0 8px 32px rgba(28,43,74,0.10);
+      --shadow-lg: 0 20px 60px rgba(28,43,74,0.14);
+      --green:     #22C55E;
+      --amber:     #F59E0B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--grey-bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(24,184,174,0.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 72px;
+      box-shadow: 0 2px 16px rgba(28,43,74,0.07);
+      flex-wrap: wrap;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; height: 72px; }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--navy); font-weight: 700;
+      font-size: 0.92rem; letter-spacing: 0.02em; transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: var(--teal); transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--teal); }
+    .nav-cta {
+      background: var(--teal); color: var(--white) !important;
+      padding: 10px 22px; border-radius: 50px; font-weight: 800 !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--teal-dark) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: none;
+      background: none;
+      z-index: 101;
+      height: 72px;
+      align-items: center;
+      justify-content: center;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2.5px;
+      background: var(--navy); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* ── PAGE HEADER ─────────────────────────────── */
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 130px 6vw 70px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%2318B8AE' fill-opacity='0.07'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-header-glow {
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(24,184,174,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header .tag {
+      display: inline-block; color: var(--teal); font-weight: 800;
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 14px; position: relative;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.65); font-size: 1rem;
+      max-width: 520px; margin: 0 auto; line-height: 1.7; position: relative;
+    }
+
+    /* ── MAIN LAYOUT ─────────────────────────────── */
+    .builder-wrap {
+      max-width: 1280px; margin: 0 auto;
+      padding: 48px 6vw 80px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ── STEPS COLUMN ────────────────────────────── */
+    .steps-col { display: flex; flex-direction: column; gap: 28px; }
+
+    .step-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+      transition: border-color .3s;
+    }
+    .step-card.active-section { border-color: rgba(24,184,174,0.3); }
+
+    .step-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px;
+    }
+    .step-num-badge {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--teal); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; flex-shrink: 0;
+    }
+    .step-header h2 { font-size: 1.15rem; font-weight: 900; color: var(--navy); }
+    .step-header p { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── SOAP GRID ───────────────────────────────── */
+    .soap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .soap-option {
+      border: 2.5px solid #E4EEF2; border-radius: 18px; padding: 20px 14px;
+      text-align: center; cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      background: var(--grey-bg); position: relative;
+    }
+    .soap-option:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(24,184,174,0.15); }
+    .soap-option.selected { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 4px rgba(24,184,174,0.15); }
+    .soap-option .check {
+      position: absolute; top: 10px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--teal); color: var(--white);
+      font-size: 0.65rem; display: none; align-items: center; justify-content: center; font-weight: 900;
+    }
+    .soap-option.selected .check { display: flex; }
+    .soap-img {
+      width: 80px; height: 80px; object-fit: contain; border-radius: 12px;
+      margin-bottom: 10px; background: white; padding: 6px;
+      box-shadow: 0 2px 10px rgba(28,43,74,0.08);
+    }
+    .soap-name { font-weight: 800; font-size: 0.95rem; color: var(--navy); }
+    .soap-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── BASKET GRID ─────────────────────────────── */
+    .basket-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .basket-option {
+      border: 2.5px solid #E4EEF2; border-radius: 18px; padding: 20px 14px;
+      text-align: center; cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      background: var(--grey-bg); position: relative;
+    }
+    .basket-option:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(24,184,174,0.15); }
+    .basket-option.selected { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 4px rgba(24,184,174,0.15); }
+    .basket-option .check {
+      position: absolute; top: 10px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--teal); color: var(--white);
+      font-size: 0.65rem; display: none; align-items: center; justify-content: center; font-weight: 900;
+    }
+    .basket-option.selected .check { display: flex; }
+    .basket-img {
+      width: 80px; height: 80px; object-fit: contain; border-radius: 12px;
+      margin-bottom: 10px; background: white; padding: 6px;
+      box-shadow: 0 2px 10px rgba(28,43,74,0.08);
+    }
+    .basket-name { font-weight: 800; font-size: 0.95rem; color: var(--navy); }
+    .basket-price { font-size: 0.9rem; color: var(--teal); font-weight: 900; margin-top: 4px; }
+    .basket-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    .no-basket-option {
+      border: 2.5px dashed #C9DDE4; border-radius: 18px; padding: 20px 18px;
+      cursor: pointer; transition: border-color .2s, background .2s;
+      display: flex; align-items: center; gap: 14px; margin-top: 14px;
+      background: var(--grey-bg); position: relative;
+    }
+    .no-basket-option:hover { border-color: var(--teal); }
+    .no-basket-option.selected { border-color: var(--teal); background: var(--teal-pale); }
+    .no-basket-option .check {
+      position: absolute; top: 12px; right: 14px; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--teal); color: var(--white);
+      font-size: 0.65rem; display: none; align-items: center; justify-content: center; font-weight: 900;
+    }
+    .no-basket-option.selected .check { display: flex; }
+    .no-basket-icon { font-size: 2rem; flex-shrink: 0; }
+    .no-basket-title { font-weight: 800; color: var(--navy); font-size: 0.95rem; }
+    .no-basket-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+
+    /* ── EXTRA SERVICES ─────────────────────────── */
+    .extras-section-label {
+      font-size: 0.75rem; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      margin: 22px 0 10px; padding-bottom: 7px;
+      border-bottom: 1.5px solid #E4EEF2;
+    }
+    .extras-section-label:first-child { margin-top: 0; }
+    .extras-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .extra-item {
+      border: 2.5px solid #E4EEF2; border-radius: 16px; padding: 15px 13px;
+      cursor: pointer; transition: border-color .2s, background .2s, transform .15s, box-shadow .2s;
+      background: var(--grey-bg); position: relative;
+      display: flex; align-items: center; gap: 11px;
+    }
+    .extra-item:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(24,184,174,0.13); }
+    .extra-item.selected { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 3px rgba(24,184,174,0.15); }
+    .extra-item .check {
+      position: absolute; top: 9px; right: 9px; width: 20px; height: 20px;
+      border-radius: 50%; background: var(--teal); color: var(--white);
+      font-size: 0.6rem; display: none; align-items: center; justify-content: center; font-weight: 900;
+    }
+    .extra-item.selected .check { display: flex; }
+    .extra-item.full-width { grid-column: 1 / -1; }
+    .extra-icon { font-size: 1.65rem; flex-shrink: 0; }
+    .extra-info { flex: 1; min-width: 0; }
+    .extra-name { font-weight: 800; font-size: 0.88rem; color: var(--navy); line-height: 1.3; }
+    .extra-desc { font-size: 0.71rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+    .extra-price { font-weight: 900; color: var(--teal); font-size: 0.9rem; margin-top: 5px; }
+    .soap-note-box {
+      background: var(--teal-pale); border: 1.5px solid rgba(24,184,174,0.28);
+      border-radius: 11px; padding: 10px 13px;
+      font-size: 0.79rem; color: var(--teal-dark); font-weight: 700;
+      margin-top: 11px; display: flex; gap: 7px; align-items: flex-start; line-height: 1.5;
+    }
+
+    /* ── ADD-ONS ─────────────────────────────────── */
+    .addon-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; border: 2.5px solid #E4EEF2; border-radius: 14px;
+      cursor: pointer; transition: border-color .2s, background .2s;
+      background: var(--grey-bg); margin-bottom: 10px;
+    }
+    .addon-row:last-child { margin-bottom: 0; }
+    .addon-row:hover { border-color: var(--teal); }
+    .addon-row.selected { border-color: var(--teal); background: var(--teal-pale); }
+    .addon-left { display: flex; align-items: center; gap: 12px; }
+    .addon-icon { font-size: 1.6rem; }
+    .addon-title { font-weight: 800; font-size: 0.95rem; color: var(--navy); }
+    .addon-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .addon-price { font-weight: 900; color: var(--teal); font-size: 1rem; }
+    .addon-toggle {
+      width: 44px; height: 24px; border-radius: 50px;
+      background: #D1DDE4; position: relative;
+      transition: background .25s; flex-shrink: 0; margin-left: 14px;
+    }
+    .addon-toggle::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+      transition: left .25s;
+    }
+    .addon-row.selected .addon-toggle { background: var(--teal); }
+    .addon-row.selected .addon-toggle::after { left: 23px; }
+
+    /* ── TIMEFRAME ───────────────────────────────── */
+    .timeframe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .time-option {
+      border: 2.5px solid #E4EEF2; border-radius: 18px; padding: 20px 14px;
+      text-align: center; cursor: pointer;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      background: var(--grey-bg); position: relative;
+    }
+    .time-option:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(24,184,174,0.15); }
+    .time-option.selected { border-color: var(--teal); background: var(--teal-pale); box-shadow: 0 0 0 4px rgba(24,184,174,0.15); }
+    .time-option .check {
+      position: absolute; top: 10px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--teal); color: var(--white);
+      font-size: 0.65rem; display: none; align-items: center; justify-content: center; font-weight: 900;
+    }
+    .time-option.selected .check { display: flex; }
+    .time-icon { font-size: 2rem; margin-bottom: 8px; }
+    .time-label { font-weight: 900; font-size: 1rem; color: var(--navy); }
+    .time-extra { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; }
+    .time-badge {
+      display: inline-block; margin-top: 8px; background: var(--teal); color: white;
+      padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 800;
+    }
+    .time-badge.free { background: var(--green); }
+    .time-badge.mid { background: var(--amber); }
+
+    /* ── WHITE CLOTHES ALERT ─────────────────────── */
+    .alert-box {
+      background: linear-gradient(135deg, #FFF8E7 0%, #FFFBF0 100%);
+      border: 2px solid #F59E0B; border-radius: 18px; padding: 22px 22px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .alert-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .alert-title { font-weight: 900; color: #92400E; font-size: 0.97rem; margin-bottom: 5px; }
+    .alert-text { font-size: 0.84rem; color: #78350F; line-height: 1.6; }
+
+    /* ── CONTACT FORM ────────────────────────────── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-weight: 800; font-size: 0.82rem; color: var(--navy);
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .form-group input, .form-group textarea {
+      border: 2px solid #E4EEF2; border-radius: 12px; padding: 12px 16px;
+      font-family: 'Nunito', sans-serif; font-size: 0.93rem; color: var(--navy);
+      outline: none; transition: border-color .2s; background: var(--grey-bg); width: 100%;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); background: white; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* ── SUBMIT BTN ──────────────────────────────── */
+    .submit-btn {
+      width: 100%; padding: 18px; background: var(--teal); color: white;
+      border: none; border-radius: 14px; font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem; font-weight: 900; cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(24,184,174,0.35);
+      display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px;
+    }
+    .submit-btn:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(24,184,174,0.4); }
+    .submit-btn:disabled { background: #9ECFCC; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* ── ORDER SUMMARY ───────────────────────────── */
+    .summary-col { position: sticky; top: 92px; }
+    .summary-card {
+      background: var(--white); border-radius: 24px; padding: 28px 24px;
+      box-shadow: var(--shadow-lg); border: 2px solid rgba(24,184,174,0.15);
+    }
+    .summary-title {
+      font-size: 1.1rem; font-weight: 900; color: var(--navy); margin-bottom: 22px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .summary-title span { color: var(--teal); }
+    .summary-empty { text-align: center; padding: 30px 0; color: var(--text-muted); font-size: 0.87rem; }
+    .summary-empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .summary-items { display: flex; flex-direction: column; gap: 0; }
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 11px 0; border-bottom: 1px solid #EEF4F6; font-size: 0.88rem;
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row-label { color: var(--text-muted); font-weight: 600; max-width: 200px; line-height: 1.4; }
+    .summary-row-val { font-weight: 800; color: var(--navy); flex-shrink: 0; margin-left: 10px; }
+    .summary-row-val.teal { color: var(--teal); }
+    .summary-divider { border: none; border-top: 2px dashed #D8E8EC; margin: 14px 0; }
+    .summary-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .summary-total-label { font-weight: 900; font-size: 1rem; color: var(--navy); }
+    .summary-total-val { font-weight: 900; font-size: 1.5rem; color: var(--teal); }
+    .summary-note {
+      margin-top: 16px; background: var(--teal-pale); border-radius: 12px;
+      padding: 12px 14px; font-size: 0.8rem; color: var(--teal-dark); font-weight: 700; line-height: 1.5;
+    }
+    .pay-note {
+      margin-top: 12px; background: #F0FFF4; border: 1.5px solid #86EFAC;
+      border-radius: 12px; padding: 12px 14px; font-size: 0.8rem; color: #15803D;
+      font-weight: 700; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── SUCCESS MODAL ───────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(28,43,74,0.6);
+      backdrop-filter: blur(8px); z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--white); border-radius: 28px; padding: 48px 40px;
+      text-align: center; max-width: 440px; width: 90%;
+      box-shadow: 0 40px 100px rgba(28,43,74,0.25);
+      transform: scale(0.9); transition: transform .3s;
+    }
+    .modal-overlay.show .modal-box { transform: scale(1); }
+    .modal-icon { font-size: 4rem; margin-bottom: 16px; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 12px; }
+    .modal-text { color: var(--text-muted); font-size: 0.93rem; line-height: 1.7; margin-bottom: 28px; }
+    .modal-close {
+      background: var(--teal); color: white; border: none; border-radius: 50px;
+      padding: 13px 36px; font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 0.97rem; cursor: pointer; transition: background .2s;
+    }
+    .modal-close:hover { background: var(--teal-dark); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .builder-wrap { grid-template-columns: 1fr; }
+      .summary-col { position: static; }
+    }
+
+    @media (max-width: 900px) {
+      /* Show hamburger, hide desktop links */
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        background: var(--white);
+        border-top: 1px solid rgba(24,184,174,0.15);
+        padding: 12px 0 20px;
+        order: 3;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        padding: 13px 20px;
+        font-size: 1rem;
+        border-radius: 10px;
+      }
+      .nav-links a::after { display: none; }
+      .nav-links a:hover { background: var(--teal-pale); color: var(--teal); }
+      .nav-cta {
+        margin: 8px 20px 0 !important;
+        text-align: center;
+        border-radius: 50px !important;
+        padding: 13px 20px !important;
+      }
+      .nav-cta:hover { transform: none !important; }
+    }
+
+    @media (max-width: 640px) {
+      .soap-grid, .basket-grid, .timeframe-grid { grid-template-columns: 1fr 1fr; }
+      .extras-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .soap-grid, .basket-grid, .timeframe-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <base target="_blank">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.jpg" alt="SUB-way Laundry Logo" />
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="booking.html" class="nav-cta active">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-glow"></div>
+    <div class="tag">Build Your Order</div>
+    <h1>Choose Your Laundry Service</h1>
+    <p>Select your preferences below and we'll take care of the rest — pickup, wash, fold & deliver.</p>
+  </div>
+
+  <!-- MAIN BUILDER -->
+  <div class="builder-wrap">
+    <div class="steps-col">
+
+      <!-- STEP 1: SOAP -->
+      <div class="step-card active-section">
+        <div class="step-header">
+          <div class="step-num-badge">1</div>
+          <div>
+            <h2>Choose Your Soap</h2>
+            <p>Pick the detergent brand you prefer for your laundry</p>
+          </div>
+        </div>
+        <div class="soap-grid">
+          <div class="soap-option" onclick="selectSoap(this, 'OMO')" data-name="OMO">
+            <div class="check">✓</div>
+            <img src="omo.jpg" alt="OMO" class="soap-img" />
+            <div class="soap-name">OMO</div>
+            <div class="soap-sub">Active Clean</div>
+          </div>
+          <div class="soap-option" onclick="selectSoap(this, 'Surf')" data-name="Surf">
+            <div class="check">✓</div>
+            <img src="surf.jpg" alt="Surf" class="soap-img" />
+            <div class="soap-name">Surf</div>
+            <div class="soap-sub">Fresh & Clean</div>
+          </div>
+          <div class="soap-option" onclick="selectSoap(this, 'Ariel')" data-name="Ariel">
+            <div class="check">✓</div>
+            <img src="ariel.jpg" alt="Ariel" class="soap-img" />
+            <div class="soap-name">Ariel</div>
+            <div class="soap-sub">Deep Clean</div>
+          </div>
+          <div class="soap-option" onclick="selectSoap(this, 'Sunlight')" data-name="Sunlight">
+            <div class="check">✓</div>
+            <img src="sunlight.jpg" alt="Sunlight" class="soap-img" />
+            <div class="soap-name">Sunlight</div>
+            <div class="soap-sub">Gentle Care</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: BASKET SIZE -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num-badge">2</div>
+          <div>
+            <h2>Basket Size</h2>
+            <p>Select the size that fits your laundry — price includes pickup, wash, iron, fold & delivery</p>
+          </div>
+        </div>
+        <div class="basket-grid">
+          <div class="basket-option" onclick="selectBasket(this, 'Small Basket', 140)">
+            <div class="check">✓</div>
+            <img src="small.jpg" alt="Small Basket" class="basket-img" />
+            <div class="basket-name">Small</div>
+            <div class="basket-price">R140</div>
+            <div class="basket-sub">Everyday items</div>
+          </div>
+          <div class="basket-option" onclick="selectBasket(this, 'Mid Basket', 210)">
+            <div class="check">✓</div>
+            <img src="mid.jpg" alt="Mid Basket" class="basket-img" />
+            <div class="basket-name">Medium</div>
+            <div class="basket-price">R210</div>
+            <div class="basket-sub">Family weekly</div>
+          </div>
+          <div class="basket-option" onclick="selectBasket(this, 'Large Basket', 250)">
+            <div class="check">✓</div>
+            <img src="large.jpg" alt="Large Basket" class="basket-img" />
+            <div class="basket-name">Large</div>
+            <div class="basket-price">R250</div>
+            <div class="basket-sub">Bulk & bedding</div>
+          </div>
+        </div>
+        <div class="no-basket-option" onclick="selectNoBasket(this)">
+          <div class="check">✓</div>
+          <div class="no-basket-icon">🧺</div>
+          <div>
+            <div class="no-basket-title">I don't have a basket — bring yours</div>
+            <div class="no-basket-desc">No problem! We'll bring our basket on pickup. Price will be confirmed once we see the load. Add-ons still apply.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: ADD-ONS -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num-badge">3</div>
+          <div>
+            <h2>Add-Ons</h2>
+            <p>Optional extras to make your laundry even better</p>
+          </div>
+        </div>
+        <div class="addon-row" onclick="toggleAddon(this, 'Fabric Conditioner / Softener', 15)">
+          <div class="addon-left">
+            <div class="addon-icon">🌸</div>
+            <div>
+              <div class="addon-title">Fabric Conditioner / Softener</div>
+              <div class="addon-desc">Leaves your clothes smelling fresh and feeling extra soft</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="addon-price">+R15</div>
+            <div class="addon-toggle"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: EXTRA SERVICES -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num-badge">4</div>
+          <div>
+            <h2>Extra Services</h2>
+            <p>Add any extra items you'd like cleaned — each one updates your total</p>
+          </div>
+        </div>
+
+        <div class="extras-section-label">👟 Shoes</div>
+        <div class="extras-grid">
+          <div class="extra-item" onclick="toggleExtra(this, 'white-shoes')" data-key="white-shoes">
+            <div class="check">✓</div>
+            <div class="extra-icon">👟</div>
+            <div class="extra-info">
+              <div class="extra-name">White Shoes</div>
+              <div class="extra-desc">Deep clean &amp; brightening for white sneakers</div>
+              <div class="extra-price">+R60</div>
+            </div>
+          </div>
+          <div class="extra-item" onclick="toggleExtra(this, 'colorful-shoes')" data-key="colorful-shoes">
+            <div class="check">✓</div>
+            <div class="extra-icon">👞</div>
+            <div class="extra-info">
+              <div class="extra-name">Colourful Shoes</div>
+              <div class="extra-desc">Gentle clean for coloured sneakers &amp; footwear</div>
+              <div class="extra-price">+R50</div>
+            </div>
+          </div>
+        </div>
+        <div class="soap-note-box">
+          ℹ️ No fabric conditioner is applied to shoes.
+        </div>
+
+        <div class="extras-section-label">🌿 Foot Care</div>
+        <div class="extras-grid">
+          <div class="extra-item full-width" onclick="toggleExtra(this, 'foot-therapy')" data-key="foot-therapy">
+            <div class="check">✓</div>
+            <div class="extra-icon">🦶</div>
+            <div class="extra-info">
+              <div class="extra-name">Foot Therapy Deodorant</div>
+              <div class="extra-desc">Naturally eliminates foot odour for good — applied inside shoes during cleaning</div>
+              <div class="extra-price">+R10</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="extras-section-label">🛏️ Duvets &amp; Bedding</div>
+        <div class="extras-grid">
+          <div class="extra-item" onclick="toggleExtra(this, 'white-duvet')" data-key="white-duvet">
+            <div class="check">✓</div>
+            <div class="extra-icon">🤍</div>
+            <div class="extra-info">
+              <div class="extra-name">White Duvet &amp; Bedding</div>
+              <div class="extra-desc">Full wash &amp; dry for white duvets, sheets &amp; pillowcases</div>
+              <div class="extra-price">+R130</div>
+            </div>
+          </div>
+          <div class="extra-item" onclick="toggleExtra(this, 'colorful-duvet')" data-key="colorful-duvet">
+            <div class="check">✓</div>
+            <div class="extra-icon">🛏️</div>
+            <div class="extra-info">
+              <div class="extra-name">Colourful Duvet &amp; Bedding</div>
+              <div class="extra-desc">Full wash &amp; dry for coloured duvets, sheets &amp; pillowcases</div>
+              <div class="extra-price">+R110</div>
+            </div>
+          </div>
+        </div>
+        <div class="soap-note-box">
+          ℹ️ Your chosen washing powder is used for duvets &amp; bedding. No fabric conditioner is applied.
+        </div>
+
+        <div class="extras-section-label">♨️ Ironing (Duvet & bedding)</div>
+        <div class="extras-grid">
+          <div class="extra-item full-width" onclick="toggleExtra(this, 'ironing')" data-key="ironing">
+            <div class="check">✓</div>
+            <div class="extra-icon">👔</div>
+            <div class="extra-info">
+              <div class="extra-name">Ironing </div>
+              <div class="extra-desc">Professional ironing for your Duvet and bedding — crisp, wrinkle-free results</div>
+              <div class="extra-price">+R15</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: TIMEFRAME -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num-badge">5</div>
+          <div>
+            <h2>Delivery Timeframe</h2>
+            <p>When do you need your laundry back?</p>
+          </div>
+        </div>
+        <div class="timeframe-grid">
+          <div class="time-option" onclick="selectTime(this, '24 Hours', 50)">
+            <div class="check">✓</div>
+            <div class="time-icon">⚡</div>
+            <div class="time-label">24 Hours</div>
+            <div class="time-extra">Express turnaround</div>
+            <div class="time-badge">+R50</div>
+          </div>
+          <div class="time-option" onclick="selectTime(this, '48 Hours', 30)">
+            <div class="check">✓</div>
+            <div class="time-icon">🕐</div>
+            <div class="time-label">48 Hours</div>
+            <div class="time-extra">Standard express</div>
+            <div class="time-badge mid">+R30</div>
+          </div>
+          <div class="time-option" onclick="selectTime(this, '72 Hours', 0)">
+            <div class="check">✓</div>
+            <div class="time-icon">🗓️</div>
+            <div class="time-label">72 Hours</div>
+            <div class="time-extra">No rush, same quality</div>
+            <div class="time-badge free">FREE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHITE CLOTHES ALERT -->
+      <div class="alert-box">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <div class="alert-title">Reminder: Separate Your Clothes Before Pickup!</div>
+          <div class="alert-text">Please separate your <strong>white clothes</strong> from your <strong>colourful clothes</strong> before we arrive. This helps us prevent colour bleeding and ensures the best cleaning results for all your garments.</div>
+        </div>
+      </div>
+
+      <!-- STEP 6: YOUR DETAILS -->
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-num-badge">6</div>
+          <div>
+            <h2>Your Details</h2>
+            <p>We'll use this to confirm your order and arrange pickup</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="cust-name" placeholder="e.g. Thabo Mokoena" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="cust-phone" placeholder="e.g. 071 234 5678" required />
+          </div>
+          <div class="form-group full">
+            <label>Delivery Address *</label>
+            <input type="text" id="cust-address" placeholder="e.g. 12 Elm Street, Soweto, Johannesburg" required />
+          </div>
+          <div class="form-group full">
+            <label>Additional Notes</label>
+            <textarea id="cust-notes" placeholder="Any special instructions, gate codes, or requests..."></textarea>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="submitOrder()">
+          <span>📦</span> Place My Order
+        </button>
+        <div style="text-align:center;margin-top:12px;font-size:0.78rem;color:var(--text-muted);">
+          Payment is collected on delivery · No upfront payment required
+        </div>
+      </div>
+
+    </div><!-- end steps-col -->
+
+    <!-- ORDER SUMMARY SIDEBAR -->
+    <div class="summary-col">
+      <div class="summary-card">
+        <div class="summary-title">🧺 <span>Your Order</span> Summary</div>
+        <div id="summary-empty" class="summary-empty">
+          <div class="summary-empty-icon">👆</div>
+          <div>Start selecting above<br>to build your order</div>
+        </div>
+        <div id="summary-items" class="summary-items" style="display:none">
+          <div class="summary-row" id="row-soap" style="display:none">
+            <div class="summary-row-label">🧼 Soap Brand</div>
+            <div class="summary-row-val" id="val-soap">—</div>
+          </div>
+          <div class="summary-row" id="row-basket" style="display:none">
+            <div class="summary-row-label">🧺 Basket Size</div>
+            <div class="summary-row-val teal" id="val-basket">—</div>
+          </div>
+          <div class="summary-row" id="row-white-shoes" style="display:none">
+            <div class="summary-row-label">👟 White Shoes</div>
+            <div class="summary-row-val teal">+R60</div>
+          </div>
+          <div class="summary-row" id="row-colorful-shoes" style="display:none">
+            <div class="summary-row-label">👠 Colourful Shoes</div>
+            <div class="summary-row-val teal">+R50</div>
+          </div>
+          <div class="summary-row" id="row-foot-therapy" style="display:none">
+            <div class="summary-row-label">🌿 Foot Therapy Deodorant</div>
+            <div class="summary-row-val teal">+R10</div>
+          </div>
+          <div class="summary-row" id="row-white-duvet" style="display:none">
+            <div class="summary-row-label">🤍 White Duvet &amp; Bedding</div>
+            <div class="summary-row-val teal">+R130</div>
+          </div>
+          <div class="summary-row" id="row-colorful-duvet" style="display:none">
+            <div class="summary-row-label">🛏️ Colourful Duvet &amp; Bedding</div>
+            <div class="summary-row-val teal">+R110</div>
+          </div>
+          <div class="summary-row" id="row-ironing" style="display:none">
+            <div class="summary-row-label">♨️ Ironing</div>
+            <div class="summary-row-val teal">+R15</div>
+          </div>
+          <div class="summary-row" id="row-conditioner" style="display:none">
+            <div class="summary-row-label">🌸 Fabric Conditioner</div>
+            <div class="summary-row-val teal">+R15</div>
+          </div>
+          <div class="summary-row" id="row-time" style="display:none">
+            <div class="summary-row-label">⏱️ Delivery Timeframe</div>
+            <div class="summary-row-val" id="val-time">—</div>
+          </div>
+        </div>
+        <hr class="summary-divider" id="summary-divider" style="display:none" />
+        <div id="summary-total-wrap" style="display:none">
+          <div class="summary-total-row">
+            <div class="summary-total-label">Total</div>
+            <div class="summary-total-val" id="summary-total">R0</div>
+          </div>
+          <div id="no-basket-note" style="display:none" class="summary-note">
+            🧺 Basket price TBD — we'll confirm after pickup. Add-ons are included in the total.
+          </div>
+          <div class="pay-note">
+            <span>✅</span> Pay on delivery — no upfront payment
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end builder-wrap -->
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <div class="modal-icon">🎉</div>
+      <div class="modal-title">Order Placed!</div>
+      <div class="modal-text">
+        Thank you! Your order has been sent to SUB-way Laundry. We'll be in touch shortly to confirm your pickup time.<br><br>
+        <strong>Remember to separate your white and colourful clothes before we arrive!</strong>
+      </div>
+      <button class="modal-close" onclick="closeModal()">Got it, thanks!</button>
+    </div>
+  </div>
+
+  <script>
+    // ── HAMBURGER MENU ─────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', function () {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ── ORDER STATE ────────────────────────────────
+    const order = {
+      soap: null,
+      basket: null,
+      basketPrice: 0,
+      noBasket: false,
+      conditioner: false,
+      timeframe: null,
+      timeframePrice: 0,
+      extras: {
+        'white-shoes':    { name: 'White Shoes',               price: 60,  active: false },
+        'colorful-shoes': { name: 'Colourful Shoes',           price: 50,  active: false },
+        'foot-therapy':   { name: 'Foot Therapy Deodorant',    price: 10,  active: false },
+        'white-duvet':    { name: 'White Duvet & Bedding',     price: 130, active: false },
+        'colorful-duvet': { name: 'Colourful Duvet & Bedding', price: 110, active: false },
+        'ironing':        { name: 'Ironing',                   price: 15,  active: false },
+      }
+    };
+
+    function selectSoap(el, name) {
+      document.querySelectorAll('.soap-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      order.soap = name;
+      updateSummary();
+    }
+
+    function selectBasket(el, name, price) {
+      document.querySelector('.no-basket-option').classList.remove('selected');
+      order.noBasket = false;
+      document.querySelectorAll('.basket-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      order.basket = name;
+      order.basketPrice = price;
+      updateSummary();
+    }
+
+    function selectNoBasket(el) {
+      document.querySelectorAll('.basket-option').forEach(e => e.classList.remove('selected'));
+      el.classList.toggle('selected');
+      order.noBasket = el.classList.contains('selected');
+      if (order.noBasket) {
+        order.basket = 'We bring basket (TBD)';
+        order.basketPrice = 0;
+      } else {
+        order.basket = null;
+        order.basketPrice = 0;
+      }
+      updateSummary();
+    }
+
+    function toggleExtra(el, key) {
+      el.classList.toggle('selected');
+      order.extras[key].active = el.classList.contains('selected');
+      updateSummary();
+    }
+
+    function toggleAddon(el, name, price) {
+      el.classList.toggle('selected');
+      order.conditioner = el.classList.contains('selected');
+      updateSummary();
+    }
+
+    function selectTime(el, label, price) {
+      document.querySelectorAll('.time-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      order.timeframe = label;
+      order.timeframePrice = price;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const extrasTotal = Object.values(order.extras).reduce((sum, e) => sum + (e.active ? e.price : 0), 0);
+      const hasAnything = order.soap || order.basket || order.conditioner || order.timeframe || extrasTotal > 0;
+
+      document.getElementById('summary-empty').style.display = hasAnything ? 'none' : 'block';
+      document.getElementById('summary-items').style.display = hasAnything ? 'flex' : 'none';
+
+      if (order.soap) {
+        document.getElementById('row-soap').style.display = 'flex';
+        document.getElementById('val-soap').textContent = order.soap;
+      } else {
+        document.getElementById('row-soap').style.display = 'none';
+      }
+
+      if (order.basket) {
+        document.getElementById('row-basket').style.display = 'flex';
+        document.getElementById('val-basket').textContent =
+          order.noBasket ? 'TBD on delivery' : `${order.basket} — R${order.basketPrice}`;
+      } else {
+        document.getElementById('row-basket').style.display = 'none';
+      }
+
+      for (const [key, extra] of Object.entries(order.extras)) {
+        const row = document.getElementById('row-' + key);
+        if (row) row.style.display = extra.active ? 'flex' : 'none';
+      }
+
+      document.getElementById('row-conditioner').style.display = order.conditioner ? 'flex' : 'none';
+
+      if (order.timeframe) {
+        document.getElementById('row-time').style.display = 'flex';
+        document.getElementById('val-time').textContent =
+          order.timeframePrice > 0
+            ? `${order.timeframe} (+R${order.timeframePrice})`
+            : `${order.timeframe} (Free)`;
+      } else {
+        document.getElementById('row-time').style.display = 'none';
+      }
+
+      let total = order.basketPrice + (order.conditioner ? 15 : 0) + order.timeframePrice + extrasTotal;
+      document.getElementById('summary-divider').style.display = hasAnything ? 'block' : 'none';
+      document.getElementById('summary-total-wrap').style.display = hasAnything ? 'block' : 'none';
+
+      const noBasketNote = document.getElementById('no-basket-note');
+      if (order.noBasket) {
+        document.getElementById('summary-total').textContent = total > 0 ? `+R${total}` : 'TBD';
+        noBasketNote.style.display = 'block';
+      } else {
+        document.getElementById('summary-total').textContent = `R${total}`;
+        noBasketNote.style.display = 'none';
+      }
+    }
+
+    function submitOrder() {
+      const name    = document.getElementById('cust-name').value.trim();
+      const phone   = document.getElementById('cust-phone').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const notes   = document.getElementById('cust-notes').value.trim();
+
+      if (!name || !phone || !address) {
+        alert('⚠️ Please fill in your name, phone number, and address before submitting.');
+        return;
+      }
+      if (!order.soap) { alert('⚠️ Please choose a soap brand.'); return; }
+      if (!order.basket) { alert('⚠️ Please choose a basket size (or select "I don\'t have a basket").'); return; }
+      if (!order.timeframe) { alert('⚠️ Please choose a delivery timeframe.'); return; }
+
+      const extrasTotal = Object.values(order.extras).reduce((sum, e) => sum + (e.active ? e.price : 0), 0);
+      const extrasSelected = Object.values(order.extras)
+        .filter(e => e.active)
+        .map(e => `${e.name} (+R${e.price})`)
+        .join(', ') || 'None';
+
+      let total = order.basketPrice + (order.conditioner ? 15 : 0) + order.timeframePrice + extrasTotal;
+      const totalStr = order.noBasket ? `+R${total} (basket TBD on delivery)` : `R${total}`;
+
+      const orderDetails = `
+SUB-WAY LAUNDRY — NEW ORDER
+============================
+Customer: ${name}
+Phone: ${phone}
+Address: ${address}
+Notes: ${notes || 'None'}
+
+ORDER DETAILS:
+- Soap Brand: ${order.soap}
+- Basket: ${order.basket}${order.noBasket ? ' (we bring basket)' : ` — R${order.basketPrice}`}
+- Extra Services: ${extrasSelected}
+- Fabric Conditioner: ${order.conditioner ? 'Yes — +R15' : 'No'}
+- Timeframe: ${order.timeframe}${order.timeframePrice > 0 ? ` — +R${order.timeframePrice}` : ' — Free'}
+
+TOTAL: ${totalStr}
+(Payment collected on delivery)
+      `.trim();
+
+      const btn = document.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Sending Order...';
+
+      emailjs.init("b-C2UN2i3Hj9Y0cGC");
+
+      emailjs.send("service_u7h8hwr", "template_jh05ixl", {
+        to_email: "subwaylaundry@gmail.com",
+        customer_name: name,
+        customer_phone: phone,
+        customer_address: address,
+        customer_notes: notes || 'None',
+        soap: order.soap,
+        basket: order.noBasket ? 'We bring basket (TBD)' : order.basket,
+        basket_price: order.noBasket ? 'TBD' : `R${order.basketPrice}`,
+        extra_services: extrasSelected,
+        conditioner: order.conditioner ? 'Yes (+R15)' : 'No',
+        timeframe: order.timeframe,
+        timeframe_price: order.timeframePrice > 0 ? `+R${order.timeframePrice}` : 'Free',
+        total: totalStr,
+        order_details: orderDetails,
+      }).then(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<span>📦</span> Place My Order';
+        document.getElementById('modal').classList.add('show');
+        resetForm();
+      }).catch((err) => {
+        console.error('EmailJS error:', err);
+        btn.disabled = false;
+        btn.innerHTML = '<span>📦</span> Place My Order';
+        alert('❌ Something went wrong sending your order. Please try again or contact us on WhatsApp.');
+      });
+    }
+
+    function resetForm() {
+      document.querySelectorAll('.soap-option, .basket-option, .time-option, .extra-item').forEach(e => e.classList.remove('selected'));
+      document.querySelector('.no-basket-option').classList.remove('selected');
+      document.querySelectorAll('.addon-row').forEach(e => e.classList.remove('selected'));
+      document.getElementById('cust-name').value = '';
+      document.getElementById('cust-phone').value = '';
+      document.getElementById('cust-address').value = '';
+      document.getElementById('cust-notes').value = '';
+      Object.keys(order.extras).forEach(k => order.extras[k].active = false);
+      Object.assign(order, { soap:null, basket:null, basketPrice:0, noBasket:false, conditioner:false, timeframe:null, timeframePrice:0 });
+      updateSummary();
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+  </script>
+</body>
+</html>
